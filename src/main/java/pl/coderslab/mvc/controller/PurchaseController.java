@@ -71,7 +71,7 @@ public class PurchaseController {
         Purchaser purchaser=purchasedao.findByPesel(PESEL);
         Password passwordobj= purchaser.getPassword();
 
-
+//komm
 
         if(BCrypt.checkpw(password,passwordobj.getPassword())) {
             Cookie cookie1 = new Cookie("zalogowany", String.valueOf(purchaser.getId()));
