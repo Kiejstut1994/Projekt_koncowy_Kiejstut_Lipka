@@ -75,7 +75,12 @@ public class WeaponController {
         {
             weaponsDAO.update(weapons);
         }
-        return "mainview";
+        return "changedata";
+    }
+    @RequestMapping(value = "/changedata", method = RequestMethod.GET)
+    public String changedatae() {
+
+        return "changedata";
     }
     @RequestMapping(value = "/deleteweaponbyname", method = RequestMethod.GET)
     public String findtodeletename(Model model) {
@@ -98,7 +103,7 @@ public class WeaponController {
         if (zawiera) {
             Weapons weapons=weaponsDAO.findbyname(name);
             weaponsDAO.delete(weapons);
-            return "redirect:mainview/true";
+            return "redirect:changedata";
 
         }else {
             return "redirect:deleteweaponbyname";

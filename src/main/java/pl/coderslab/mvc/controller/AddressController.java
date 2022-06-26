@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.DAOclasses.AddressDAO;
 import pl.coderslab.DAOclasses.PurchaseDAO;
 import pl.coderslab.classes.Address;
+import pl.coderslab.classes.Password;
 import pl.coderslab.classes.Purchaser;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class AddressController {
         this.purchaseDAO = purchaseDAO;
     }
     @RequestMapping(value = "/addressform", method = RequestMethod.GET)
-    public String getFrom(Model model,@RequestParam int purchaser_id)  {
+    public String getadresFrom(Model model,@RequestParam int purchaser_id)  {
         model.addAttribute("address", new Address());
         model.addAttribute("purchaser_id",purchaser_id);
         return "addressform";
@@ -40,6 +41,30 @@ public class AddressController {
         Purchaser purchaser=purchaseDAO.findById(id);
         purchaser.setAddress(address);
         purchaseDAO.update(purchaser);
-        return "purchaseresult";
+        return "redirect:/purchaseresult";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

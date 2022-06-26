@@ -26,13 +26,17 @@
                         <div  class="col-md-4">
 
                             <form:form class="row g-3" action="/addressform/${purchaser_id}" method="post"  modelAttribute="address" >
-                                <form:input path="street" name="street" type="text" class="form-control" placeholder="Street" />
+                                <h5 class="card-title">Nazwa ulicy większa niż 5 liter</h5>
+                                <form:input path="street" pattern="\w{5,}" name="street" type="text" class="form-control" placeholder="Street" />
                                 <form:errors path="street"  />
+                                <h5 class="card-title">Musi być większe od 0</h5>
                                 <form:input path="flatnumber" min="1" name="flatnumber" type="number"  class="form-control"  placeholder="Flatnumber" />
                                 <form:errors path="flatnumber"  />
+                                <h5 class="card-title">Musi być większe od 0</h5>
                                 <form:input path="housenumber" min="1" name="housenumber" type="number" class="form-control"  placeholder="Housenumber" />
                                 <form:errors path="housenumber"  />
-                                <form:input path="postcode" pattern = "[0-9][0-9][0-9][0-9][0-9]" name="postcode" type="text" class="form-control" placeholder="postcode" />
+                                <h5 class="card-title">5 cyfr bez kreski</h5>
+                                <form:input path="postcode" pattern = "[0-9][0-9][0-9][0-9][0-9]"  name="postcode" type="text" class="form-control" placeholder="postcode" />
                                 <form:errors path="postcode" />
 
                                 <button class="btn btn-primary" type="submit">Submit form</button>

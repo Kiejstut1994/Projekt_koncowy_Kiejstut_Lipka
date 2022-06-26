@@ -65,6 +65,7 @@ public class UserController {
 
 
         return "<a href=\"http://localhost:8080/veryficated\">Sukces, przejdz dalej</a>";
+
     }
     @RequestMapping(value = "/veryficated", method = RequestMethod.GET)
     public String veryficated() {
@@ -89,7 +90,7 @@ public class UserController {
         UserPassword userPassword=user.getUserPassword();
 
         if (BCrypt.checkpw(password,userPassword.getPassword())){
-            return "mainview";
+            return "userlogresult";
         }else {
             return "loginformuser";
         }
@@ -140,6 +141,17 @@ public class UserController {
         userPassword.setPassword(BCrypt.hashpw(userPassword.getPassword(), BCrypt.gensalt()));
 userPaswordDAO.update(userPassword);
 
-        return "redirect:/mainview/true";
+        return "redirect:/userresult";
+    }
+    @RequestMapping(value = "/userresult", method = RequestMethod.GET)
+    public String result() {
+
+        return "userresult";
+    }
+
+    @RequestMapping(value = "/userlogresult", method = RequestMethod.GET)
+    public String usresult() {
+
+        return "userlogresult";
     }
 }

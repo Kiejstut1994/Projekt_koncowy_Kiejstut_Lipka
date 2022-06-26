@@ -78,14 +78,19 @@ public class PurchaseController {
             cookie1.setPath("/");
             cookie1.setMaxAge(10*3600);
             response.addCookie(cookie1);
-            return "redirect:purchaseresult";
+            return "redirect:purchaserloged";
         }else {
             return "redirect:loginform";
         }
 
 
-    }
 
+    }
+    @RequestMapping(value = "/purchaserloged", method = RequestMethod.GET)
+    public String purchaserloged() {
+
+        return "purchaserloged";
+    }
 
 
 }
