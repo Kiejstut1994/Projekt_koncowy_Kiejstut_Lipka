@@ -1,0 +1,4 @@
+# Projekt_koncowy_Kiejstut_Lipka
+Projekt końcowy Kiejstut Lipka
+Projekt jest symulacją sklepu internetowego z bronią. Na początku należy przejść przez weryfikację wieku. Jeśli ktoś jest niepełnoletni  odsyła go do googla. Dla osób pełnoletnich występuje przekserowanie na stronę główną.  Po lewej stronie znajduje się pasek z towarami jakie można obejrzeć, można zarejestrować się, zalogować. W przypadku logowania dodawane jest ciasteczko z id osoby zalogowanej. Możliwe jest również dodanie konta dla pracownika. Ponadto  możliwe jest usunięcie broni ze sklepu oraz zmianę oceny, ceny bądź zdjęcia broni. W przypadku nowych kont pracownik sklepu musi zweryfikować  mail oraz licencję na broń aby móc kupować w sklepie. Dodano również regulamin sklepu.
+UWAGA: Zdjęcia oraz regulamin został pobrany ze strony, : https://cyngiel.com.pl/
