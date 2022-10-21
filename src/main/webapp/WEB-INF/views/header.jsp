@@ -285,10 +285,10 @@
         </li><!-- End Tables Nav -->
 
         <li class="nav-item">
-            <a class="nav-link " data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-bar-chart"></i><span>Ochrona wzroku i słuchu</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="charts-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="charts-chartjs.html" class="active">
                         <i class="bi bi-circle"></i><span>Ochrona wzroku</span>
@@ -334,9 +334,9 @@
         <!--      </li>&lt;!&ndash; End F.A.Q Page Nav &ndash;&gt;-->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
+            <a class="nav-link collapsed" href="/shoppingcart">
                 <i class="bi bi-envelope"></i>
-                <span>Wiadomość do sklepu</span>
+                <span>Koszyk</span>
             </a>
         </li><!-- End Contact Page Nav -->
 

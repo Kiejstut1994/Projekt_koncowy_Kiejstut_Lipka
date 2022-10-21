@@ -18,6 +18,7 @@ public class WeaponsDAO {
     public void saveWeapons(Weapons weapons) {
         entityManager.persist(weapons);
     }
+
     public void update(Weapons weapons) {
         entityManager.merge(weapons);
     }
@@ -48,4 +49,5 @@ public class WeaponsDAO {
        List<Weapons> weapons=query.getResultList();
         return weapons.get(0);
     }
+
 }

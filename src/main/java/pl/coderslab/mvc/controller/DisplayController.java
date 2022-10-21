@@ -15,6 +15,7 @@ import pl.coderslab.classes.Weapons;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,11 +28,21 @@ public class DisplayController {
         this.weaponsDAO = weaponsDAO;
         this.ammunitionDAO = ammunitionDAO;
     }
+    @RequestMapping(value = "/deletecookie", method = RequestMethod.GET)
+    public String delFrom(HttpServletRequest request, HttpSession httpSession) {
+        Cookie c = WebUtils.getCookie(request, "wiekok");
+
+       c.setMaxAge(0);
+        return "ageveryfication";
+    }
 
     @RequestMapping(value = "/ageveryfication", method = RequestMethod.GET)
-    public String getFrom(HttpServletRequest request) {
+    public String getFrom(HttpServletRequest request, HttpSession httpSession) {
+        httpSession.setAttribute("zalogowany",-1);
         Cookie c = WebUtils.getCookie(request, "wiekok");
+
         if(c!=null){
+
             return "mainview";
         }else {
             return "ageveryfication";
@@ -57,14 +68,15 @@ public class DisplayController {
     }
     @RequestMapping(value = "/weaponsform", method = RequestMethod.POST)
     public String saveeapon(@Valid Weapons weapons, BindingResult result) {
-if(result.hasErrors()){
-    return "weaponsform";
-}
+    if(result.hasErrors()){
+        return "weaponsform";
+    }
         weaponsDAO.saveWeapons(weapons);
         return "mainview";
     }
     @RequestMapping(value = "/weapondisplay/{type}", method = RequestMethod.GET)
-    public String dispweapon(Model model, @PathVariable("type") String type) {
+    public String dispweapon(Model model, @PathVariable("type") String type,HttpSession ses) {
+        int zalogowany = (int) ses.getAttribute("zalogowany");
         List<Weapons> weapons=weaponsDAO.findalltype(type);
         model.addAttribute("weapons", weapons);
         return "weapondisplay";

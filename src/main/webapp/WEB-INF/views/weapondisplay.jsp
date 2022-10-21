@@ -29,8 +29,14 @@
                                         <h5 class="card-title">${weapon.name}</h5>
                                         <p class="card-text">${weapon.price}zł</p>
                                     </div>
+                                    <c:if test="${zalogowany>-1}">
+                                        <button class="btn btn-primary" type="submit"><a href="/addweapon/${weapon.id}">Kup</a></button>
+                                    </c:if>
+
+
                                 </div><!-- End Card with an image on top -->
                             </c:forEach>
+
 
 
                         </div><!-- End Slides with captions -->

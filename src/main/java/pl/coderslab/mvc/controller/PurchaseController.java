@@ -14,9 +14,11 @@ import pl.coderslab.classes.Purchaser;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
+//@SessionAttributes({"zalogowany","noord"})
 public class PurchaseController {
     public final PurchaseDAO purchasedao;
     public final PasswordDAO passwordDAO;
@@ -60,24 +62,20 @@ public class PurchaseController {
         return "loginform";
     }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request,HttpServletResponse response) {
-        Cookie c = WebUtils.getCookie(request, "zalogowany");
-        c.setMaxAge(0);
-        response.addCookie(c);
+    public String logout(HttpSession ses) {
+        ses.setAttribute("zalogowany",-1);
+        ses.setAttribute("noord",0);
         return "mainview";
     }
     @RequestMapping(value = "/loginform", method = RequestMethod.POST)
-    public String loginpurchase(@RequestParam String PESEL, @RequestParam String password, HttpServletResponse response) {
+    public String loginpurchase(@RequestParam String PESEL, @RequestParam String password,HttpSession ses) {
         Purchaser purchaser=purchasedao.findByPesel(PESEL);
         Password passwordobj= purchaser.getPassword();
 
-//komm
+
 
         if(BCrypt.checkpw(password,passwordobj.getPassword())) {
-            Cookie cookie1 = new Cookie("zalogowany", String.valueOf(purchaser.getId()));
-            cookie1.setPath("/");
-            cookie1.setMaxAge(10*3600);
-            response.addCookie(cookie1);
+            ses.setAttribute("zalogowany",purchaser.getId());
             return "redirect:purchaserloged";
         }else {
             return "redirect:loginform";
@@ -87,8 +85,8 @@ public class PurchaseController {
 
     }
     @RequestMapping(value = "/purchaserloged", method = RequestMethod.GET)
-    public String purchaserloged() {
-
+    public String purchaserloged(HttpSession ses) {
+        ses.setAttribute("noord",0);
         return "purchaserloged";
     }
 

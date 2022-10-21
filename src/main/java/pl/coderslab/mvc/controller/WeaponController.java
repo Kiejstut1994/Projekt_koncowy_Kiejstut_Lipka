@@ -2,24 +2,28 @@ package pl.coderslab.mvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.DAOclasses.OrdersDAO;
 import pl.coderslab.DAOclasses.WeaponsDAO;
+import pl.coderslab.classes.Orders;
 import pl.coderslab.classes.Weapons;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Controller
 public class WeaponController {
     private final WeaponsDAO weaponsDAO;
+    private final OrdersDAO ordersDAO;
 
-    public WeaponController(WeaponsDAO weaponsDAO) {
+    public WeaponController(WeaponsDAO weaponsDAO, OrdersDAO ordersDAO) {
         this.weaponsDAO = weaponsDAO;
+        this.ordersDAO = ordersDAO;
     }
     @RequestMapping(value = "/findbyweaponname", method = RequestMethod.GET)
     public String findname(Model model) {
@@ -45,6 +49,32 @@ public class WeaponController {
             return "redirect:findbyweaponname";
         }
     }
+@RequestMapping(value = "/addweapon/{id}",method = RequestMethod.GET)
+public String addweapon(@PathVariable("id") int id, HttpSession ses){
+    Weapons weapons=weaponsDAO.findById(id);
+        int ord=(int) ses.getAttribute("noord");
+        int zalogowany=(int) ses.getAttribute("zalogowany");
+        if(ord==0)
+        {
+            Orders orders=new Orders();
+            orders.setPuchaserid(zalogowany);
+            List<Weapons> weaponsList=new ArrayList<>();
+            weaponsList.add(weapons);
+            orders.setWeapons(weaponsList);
+            orders.setPrice(weapons.getPrice());
+            orders.setPaid(false);
+            ses.setAttribute("noord",orders.getId());
+            ordersDAO.saveOrders(orders);
+            }else {
+            Orders orders=ordersDAO.findById(ord);
+            List<Weapons> weaponsList=orders.getWeapons();
+            weaponsList.add(weapons);
+            orders.setWeapons(weaponsList);
+            orders.setPrice(orders.getPrice()+weapons.getPrice());
+            ordersDAO.updateorders(orders);
+        }
+        return "redirect:/shoppingcart";
+        }
     @RequestMapping(value = "/changeweapondata/{name}", method = RequestMethod.GET)
     public String updateweaponget(@PathVariable("name") String name,Model model) {
         model.addAttribute("name",name);
