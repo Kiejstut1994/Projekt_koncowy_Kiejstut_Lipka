@@ -26,7 +26,7 @@
                             <form class="row g-3" action="/loginform" method="post" >
                                 <input path="PESEL" name="PESEL" placeholder="PESEL" class="form-control" />
                                 <input path="password" name="password" placeholder="Hasło" class="form-control" type="password" />
-                                <button class="btn btn-primary" type="submit">Submit form</button>
+                                <button class="btn btn-primary" type="submit">Zaloguj</button>
                             </form>
                         </div>
 

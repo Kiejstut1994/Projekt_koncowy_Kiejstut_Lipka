@@ -50,4 +50,9 @@ public class WeaponsDAO {
         return weapons.get(0);
     }
 
+    public int maxwep() {
+        Query query = entityManager.createQuery("SELECT max(w.id) FROM Weapons w");
+        List<Integer> weapons=query.getResultList();
+        return weapons.get(0);
+    }
 }

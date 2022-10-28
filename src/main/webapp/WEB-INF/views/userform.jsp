@@ -24,12 +24,16 @@
 
                         <div  class="col-md-4">
                             <form:form class="row g-3" action="/userform" method="post" modelAttribute="user" >
+                                Imię:
                                 <form:input name="name" placeholder="Podaj imię" type="text"  class="form-control"  path="name"/>
                                 <form:errors path="name" />
+                                </br>
+                                Nazwisko:
                                 <form:input path="surname" name="surname" type="text" placeholder="Podaj nazwisko" class="form-control" />
                                 <form:errors path="surname"  />
-                                <button class="btn btn-primary" type="submit">Submit form</button>
-
+                                </br>
+                                <button class="btn btn-primary" type="submit">Przejdź dalej</button>
+                                <div class="form-message"></div>
                             </form:form>
                         </div>
 

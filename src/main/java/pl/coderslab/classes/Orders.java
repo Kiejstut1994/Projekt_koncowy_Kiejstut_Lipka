@@ -22,12 +22,12 @@ public class Orders {
     private List<Guncovers> guncovers=new ArrayList<>();
     @OneToMany
     private List<Weapons> weapons=new ArrayList<>();
-@Column(name = "price")
-private double price;
-@Column(name = "active")
-private boolean active;
-@Column(name = "paid")
-private boolean paid;
+    @Column(name = "price")
+    private double price;
+    @Column(name = "active")
+    private boolean active;
+    @Column(name = "paid")
+    private boolean paid;
 
     public double getPrice() {
         return price;
@@ -99,6 +99,18 @@ private boolean paid;
 
     public void setWeapons(List<Weapons> weapons) {
         this.weapons = weapons;
+    }
+
+    public Orders(int id, int puchaserid, List<Ammunition> ammunitions, List<EarandeyesrecoverAccesories> earandeyesrecoverAccesories, List<Guncovers> guncovers, List<Weapons> weapons, double price, boolean active, boolean paid) {
+        this.id = id;
+        this.puchaserid = puchaserid;
+        this.ammunitions = ammunitions;
+        this.earandeyesrecoverAccesories = earandeyesrecoverAccesories;
+        this.guncovers = guncovers;
+        this.weapons = weapons;
+        this.price = price;
+        this.active = active;
+        this.paid = paid;
     }
 
     public Orders() {

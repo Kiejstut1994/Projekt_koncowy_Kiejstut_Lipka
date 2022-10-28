@@ -317,3 +317,32 @@
   }
 
 })();
+// // MOJE
+// console.log("Działąm")
+// const form=document.querySelector("#formuser")
+// const username = form.querySelector("input[name=name]");
+// const usersurname = form.querySelector("input[name=surname]");
+// const formMessage = form.querySelector(".form-message");
+// form.addEventListener("submituser", function (e) {
+//   e.preventDefault();
+//   let error = "";
+//   const reg="[A-Z]{1}[a-z]{4,18}"
+//   if (!reg.test(username.value)) {
+//     error += "Imię ma mieć między 5 a 20 znaków \n";
+//   }
+//
+//   if (!reg.test(usersurname.value)) {
+//     error += "Nazwisko ma mieć między 5 a 20 znaków \n";
+//   }
+//   if (error.length) {
+//     e.target.submit();
+//   }else {
+//     formMessage.innerHTML = `
+//             <h3 class="form-error-title">Przed wysłaniem proszę poprawić błędy:</h3>
+//             <ul class="form-error-list">
+//                 ${error.map(el => `<li>${el}</li>`).join("")}
+//             </ul>
+//         `;
+//   }
+//
+// });

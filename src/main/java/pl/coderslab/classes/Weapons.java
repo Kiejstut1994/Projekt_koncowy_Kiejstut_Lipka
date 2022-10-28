@@ -4,6 +4,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -16,19 +17,19 @@ public class Weapons {
     @Size(min = 5,message ="Za krótka nazwa" )
     private String name;
     @Column(name = "weight", precision = 2,nullable = false)
-    @NumberFormat
+    @NotNull(message = "Podaj wagę")
     private double weight;
     @Column(name = "producent",length=100,nullable = false)
-    @Size(min = 2,message ="Za krótka nazwa producenta" )
+    @Size(min = 5,max = 30,message ="Nazwa producenta między 5 a 30 znaków" )
     private String producent;
     @Column(name = "price", precision = 2,nullable = false)
-    @NumberFormat
+    @NotNull(message = "Podaj cenę")
     private double price;
     @Column(name = "caliber",length=20,nullable = false)
     @Size(min = 2,message ="Za krótka nazwa kalibru" )
     private String caliber;
     @Column(name = "rating", precision = 1,nullable = false)
-    @NumberFormat
+    @NotNull(message = "Podaj ocenę")
     private double rating;
     @Column(name = "type",length=20,nullable = false)
     @NotNull(message = "Proszę wybrać jedną opcję")
@@ -36,9 +37,6 @@ public class Weapons {
     @Column(name = "photo",length = 200,nullable = false)
     @NotNull(message = "To nie może być puste")
     private String photo;
-
-//    @ManyToMany
-//    @JoinTable(name = "ammunition",joinColumns = @JoinColumn(name = "weapons_id"),inverseJoinColumns = @JoinColumn(name = "ammunition_id"))
 
     public Weapons(){}
     public Weapons(int id, String name, double weight, String producent, double price, String caliber, double rating, String type, String photo) {

@@ -57,10 +57,6 @@ public class UserDAO {
         entityManager.merge(user);
     }
 
-
-
-
-
     public void delete(User user) {
         entityManager.remove(entityManager.contains(user) ?
                 user : entityManager.merge(user));

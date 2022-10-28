@@ -2,32 +2,36 @@ package pl.coderslab.mvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
-import pl.coderslab.DAOclasses.AmmunitionDAO;
-import pl.coderslab.DAOclasses.WeaponsDAO;
-import pl.coderslab.classes.Ammunition;
-import pl.coderslab.classes.Weapons;
+import pl.coderslab.DAOclasses.*;
+import pl.coderslab.classes.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class DisplayController {
     public final WeaponsDAO weaponsDAO;
     public final AmmunitionDAO ammunitionDAO;
+    public final OpticAccesoriesDAO opticAccesoriesDAO;
+    public final GuncoversDAO guncoversDAO;
+    private final EarandeyesrecoverAccesoriesDAO earandeyesrecoverAccesoriesDAO;
 
-    public DisplayController(WeaponsDAO weaponsDAO, AmmunitionDAO ammunitionDAO) {
+    public DisplayController(WeaponsDAO weaponsDAO, AmmunitionDAO ammunitionDAO, OpticAccesoriesDAO opticAccesoriesDAO, GuncoversDAO guncoversDAO, EarandeyesrecoverAccesoriesDAO earandeyesrecoverAccesoriesDAO) {
         this.weaponsDAO = weaponsDAO;
         this.ammunitionDAO = ammunitionDAO;
+        this.opticAccesoriesDAO = opticAccesoriesDAO;
+        this.guncoversDAO = guncoversDAO;
+        this.earandeyesrecoverAccesoriesDAO = earandeyesrecoverAccesoriesDAO;
     }
+
+
     @RequestMapping(value = "/deletecookie", method = RequestMethod.GET)
     public String delFrom(HttpServletRequest request, HttpSession httpSession) {
         Cookie c = WebUtils.getCookie(request, "wiekok");
@@ -61,44 +65,36 @@ public class DisplayController {
         return "rights";
     }
 
-    @RequestMapping(value = "/weaponsform", method = RequestMethod.GET)
-    public String addweapon(Model model) {
-        model.addAttribute("weapons", new Weapons());
-        return "weaponsform";
-    }
-    @RequestMapping(value = "/weaponsform", method = RequestMethod.POST)
-    public String saveeapon(@Valid Weapons weapons, BindingResult result) {
-    if(result.hasErrors()){
-        return "weaponsform";
-    }
-        weaponsDAO.saveWeapons(weapons);
-        return "mainview";
-    }
     @RequestMapping(value = "/weapondisplay/{type}", method = RequestMethod.GET)
     public String dispweapon(Model model, @PathVariable("type") String type,HttpSession ses) {
         int zalogowany = (int) ses.getAttribute("zalogowany");
         List<Weapons> weapons=weaponsDAO.findalltype(type);
-        model.addAttribute("weapons", weapons);
+        model.addAttribute("weaponsl", weapons);
         return "weapondisplay";
-    }
-    @RequestMapping(value = "/ammunitionsform", method = RequestMethod.GET)
-    public String addammunition(Model model) {
-        model.addAttribute("ammunition", new Ammunition());
-        return "ammunitionsform";
-    }
-    @RequestMapping(value = "/ammunitionsform", method = RequestMethod.POST)
-    public String saveammunition(@Valid Ammunition ammunition, BindingResult result) {
-        if(result.hasErrors()){
-            return "ammunitionsform";
-        }
-        ammunitionDAO.saveAmmunition(ammunition);
-        return "mainview";
     }
     @RequestMapping(value = "/ammunitiondisplay/{type}", method = RequestMethod.GET)
     public String dispammunition(Model model, @PathVariable("type") String type) {
         List<Ammunition> ammunitions=ammunitionDAO.findalltype(type);
         model.addAttribute("ammunitions", ammunitions);
-        return "/ammunitiondisplay";
+        return "ammunitiondisplay";
+    }
+    @RequestMapping(value = "/opticaccesoriesdisplay/{type}", method = RequestMethod.GET)
+    public String dispoptics(Model model, @PathVariable("type") String type) {
+        List<OpticAccesories> opticaccesories=opticAccesoriesDAO.findalltype(type);
+        model.addAttribute("opticaccesories", opticaccesories);
+        return "opticaccesoriesdisplay";
+    }
+    @RequestMapping(value = "/guncoversdisplay", method = RequestMethod.GET)
+    public String disguns(Model model) {
+        List<Guncovers> guncovers=guncoversDAO.findallguncovs();
+        model.addAttribute("guncovers", guncovers);
+        return "guncoversdisplay";
+    }
+    @RequestMapping(value = "/earandeyesrecoverAccesoriesdisplay/{type}", method = RequestMethod.GET)
+    public String disears(Model model,@PathVariable("type") String type) {
+        List<EarandeyesrecoverAccesories> earandeyesrecoverAccesories=earandeyesrecoverAccesoriesDAO.findallbytype(type);
+        model.addAttribute("earandeyesrecoverAccesories", earandeyesrecoverAccesories);
+        return "earandeyesrecoverAccesoriesdisplay";
     }
 
 }

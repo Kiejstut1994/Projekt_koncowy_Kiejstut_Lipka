@@ -25,10 +25,10 @@
             <p>Żadne dane nie mogą być fałszywe. Wprowadzenie w błąd grozi karą do 3 lat więzienia</p>
             <div  class="col-md-4">
 
-              <form:form class="row g-3" action="/passwordform/${purchaser_id}" method="post"  modelAttribute="password"  >
+              <form:form class="row g-3" action="/passwordform" method="post"  modelAttribute="password"  >
                 <form:input path="password" name="password" placeholder="Hasło" class="form-control" type="password" />
                 <form:errors path="password" />
-                <button class="btn btn-primary" type="submit">Submit form</button>
+                <button class="btn btn-primary" type="submit">Dodaj hasło</button>
               </form:form>
             </div>
 

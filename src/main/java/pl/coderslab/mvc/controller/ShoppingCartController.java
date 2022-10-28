@@ -23,9 +23,8 @@ public class ShoppingCartController {
     @RequestMapping(value = "/shoppingcart",method = RequestMethod.GET)
     public String showorders(Model model, HttpSession session){
         int ordnumber=(int) session.getAttribute("noord");
-        Orders orders=ordersDAO.findById(ordnumber);
-        model.addAttribute("orders",orders);
-        model.addAttribute("purchaseraddres", addressDAO.findById(orders.getPuchaserid()));
+        int zalogowany=(int) session.getAttribute("zalogowany");
+        model.addAttribute("purchaseraddres", addressDAO.findById(zalogowany));
         return "shoppingcart";
     }
 }

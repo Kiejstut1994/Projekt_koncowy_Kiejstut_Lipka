@@ -10,10 +10,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name",length=20,nullable = false)
-    @Size(min = 3,message = "Za krótkie imię")
+    @Size(min = 5,max = 20,message = "Imię między 5 a 20 znaków")
     private String name;
     @Column(name = "surname",length=20,nullable = false)
-    @Size(min = 3,message = "Za krótkie nazwisko")
+    @Size(min = 5,max = 20,message = "Nazwisko między 5 a 20 znaków")
     private String surname;
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "user_password_id",unique=true)

@@ -18,7 +18,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">W celu przejrzenia oferty zapraszamy do zalogowania się oraz przejrzenia oferty</h5>
-
                     </div>
                 </div>
 

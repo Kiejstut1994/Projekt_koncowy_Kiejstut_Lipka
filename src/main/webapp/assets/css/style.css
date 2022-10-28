@@ -121,6 +121,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #a5c5fe;
   margin: 0;
 }
+/*.error{*/
+/*  color: #444444;*/
+/*  text-decoration: underline;*/
+/*}*/
 .dropdown-menu .dropdown-item {
   font-size: 14px;
   padding: 10px 15px;

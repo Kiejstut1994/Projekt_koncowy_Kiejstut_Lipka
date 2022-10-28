@@ -30,7 +30,7 @@
                                 <input path="name" name="name" placeholder="Imię" class="form-control" />
                                 <input path="surname" name="surname" placeholder="Nazwisko" class="form-control" />
                                 <input path="password" name="password" placeholder="Hasło osobiste" class="form-control" type="password" />
-                                <button class="btn btn-primary" type="submit">Submit form</button>
+                                <button class="btn btn-primary" type="submit">Zaloguj</button>
                             </form>
 
 

@@ -25,19 +25,37 @@
                         <p>Żadne dane nie mogą być fałszywe. Wprowadzenie w błąd grozi karą do 3 lat więzienia</p>
                         <div  class="col-md-4">
                         <form:form class="row g-3" action="/purchaserform" method="post" modelAttribute="purchaser" >
+                            Imię:
                             <form:input name="name" placeholder="Podaj imię" type="text"  class="form-control"  path="name"/>
                             <form:errors path="name" />
+                            </br>
+                            Nazwisko:
                             <form:input path="surname" name="surname" type="text" placeholder="Podaj nazwisko" class="form-control" />
                             <form:errors path="surname"  />
+                            </br>
+                            PESEL:
                             <form:input name="PESEL" path="PESEL" type="text" class="form-control" placeholder="PESEL" />
                             <form:errors path="PESEL"  />
+                            </br>
+                            <c:if test="${repeatpesel==1}">
+                                Taki PESEL już istnieje w bazie danych
+                            </c:if>
+                            </br>
+                            Email:
                             <form:input path="email" name="email" type="text" class="form-control" placeholder="Email" />
                             <form:errors path="email" />
+                            </br>
+                            <c:if test="${repeatemail==1}">
+                                Taki email już istnieje w bazie danych
+                            </c:if>
+
+                            </br>
                                         <label class="form-check-label" for="invalidCheck2">
-                                            Agreement due to rules
+                                            Akceptuję regulamin
                                         </label>
-                                <input class="form-check-input" type="checkbox" placeholder="Agreement due to rules" value="agreement" id="invalidCheck2" required>
-                                <button class="btn btn-primary" type="submit">Submit form</button>
+                                <input class="form-check-input" type="checkbox" placeholder="Akceptuję warunki regulaminu" value="agreement" id="invalidCheck2" required>
+                            </br>
+                                <button class="btn btn-primary" type="submit">Dodaj kupującego</button>
 
                             </form:form>
                             </div>

@@ -36,6 +36,27 @@ public class AmmunitionDAO {
         query.setParameter("type",type);
         return query.getResultList();
     }
+    public List<Ammunition> findall(){
+        Query query = entityManager.createQuery("SELECT a FROM Ammunition a");
+        List<Ammunition> ammunitions=query.getResultList();
+        return ammunitions;
+    }
+    public List<String> findallammnames(){
+        Query query = entityManager.createQuery("SELECT a.name FROM Ammunition a");
+        List<String> names=query.getResultList();
+        return names;
+    }
+    public Ammunition findammbyname(String name){
+        Query query = entityManager.createQuery("SELECT a FROM Ammunition a where a.name=:name");
+        query.setParameter("name",name);
+        List<Ammunition> ammunitions=query.getResultList();
+        return ammunitions.get(0);
+    }
+    public int maxid(){
+        Query query = entityManager.createQuery("SELECT max(a.id) from Ammunition a");
+        List<Integer> id=query.getResultList();
+        return id.get(0);
+    }
 }
 
 

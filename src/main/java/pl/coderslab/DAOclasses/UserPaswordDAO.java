@@ -15,7 +15,13 @@ import java.util.List;
 public class UserPaswordDAO {
     @PersistenceContext
     EntityManager entityManager;
-
+    public void saveUserpassword(UserPassword userPassword) {
+        entityManager.persist(userPassword);
+    }
+    public void delete(UserPassword userPassword) {
+        entityManager.remove(entityManager.contains(userPassword) ?
+                userPassword : entityManager.merge(userPassword));
+    }
     public void update(UserPassword userPassword) {
         entityManager.merge(userPassword);
     }

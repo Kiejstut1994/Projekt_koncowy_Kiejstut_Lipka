@@ -11,13 +11,8 @@ public class Password {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "password",nullable = false,unique = true)
-    @Size(min=5,max = 10000)
+    @Size(min=5,max = 10000,message = "Za krótkie hasło")
     private String password;
-
-
-
-
-
 
     public Password(int id, String password) {
         this.id=id;

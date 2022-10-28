@@ -5,7 +5,9 @@ import pl.coderslab.classes.EarandeyesrecoverAccesories;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -27,5 +29,30 @@ public class EarandeyesrecoverAccesoriesDAO {
     public void delete(EarandeyesrecoverAccesories earandeyesrecoverAccesories) {
         entityManager.remove(entityManager.contains(earandeyesrecoverAccesories) ?
                 earandeyesrecoverAccesories : entityManager.merge(earandeyesrecoverAccesories));
+    }
+
+    public List<EarandeyesrecoverAccesories> findallbytype(String type) {
+        Query query= entityManager.createQuery("select e from EarandeyesrecoverAccesories e where e.type=:type");
+        query.setParameter("type",type);
+    return query.getResultList();
+    }
+
+    public List<EarandeyesrecoverAccesories> findallearandeyesrecoverAccesories() {
+        Query query=entityManager.createQuery("select e from EarandeyesrecoverAccesories e");
+        return query.getResultList();
+    }
+
+    public EarandeyesrecoverAccesories findearandeyesrecoverAccesoriesbyname(String name) {
+        Query query= entityManager.createQuery("select e from EarandeyesrecoverAccesories e where e.name=:name");
+        query.setParameter("name",name);
+        List<EarandeyesrecoverAccesories> earandeyesrecoverAccesories= query.getResultList();
+        return earandeyesrecoverAccesories.get(0);
+    }
+
+
+    public int maxideae() {
+        Query query = entityManager.createQuery("SELECT max(e.id) from EarandeyesrecoverAccesories e");
+        List<Integer> id=query.getResultList();
+        return id.get(0);
     }
 }

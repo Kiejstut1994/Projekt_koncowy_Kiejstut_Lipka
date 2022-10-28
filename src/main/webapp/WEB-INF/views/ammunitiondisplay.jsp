@@ -24,13 +24,14 @@
 
             <c:forEach var="ammunition" items="${ammunitions}">
               <div class="card">
-                <img src="assets/img/${ammunition.photo}" class="card-img-top" >
+                <img src="http://localhost:8080/assets/img/${ammunition.photo}" class="card-img-top" >
                 <div class="card-body">
                   <h5 class="card-title">${ammunition.name}</h5>
                   <p class="card-text">${ammunition.price}zł</p>
+                  <p class="card-text">${ammunition.numberinpack} naboi</p>
                 </div>
                 <c:if test="${zalogowany>-1}">
-                  <button class="btn btn-primary" type="submit"><a href="/deleteweaponbyname">Kup</a></button>
+                  <button class="btn btn-primary" type="submit"><a href="/addammunition/${ammunition.id}">Kup</a></button>
                 </c:if>
               </div><!-- End Card with an image on top -->
             </c:forEach>

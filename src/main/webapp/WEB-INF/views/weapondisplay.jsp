@@ -22,7 +22,7 @@
                         <!-- Slides with captions -->
 <%--                        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">--%>
 
-                            <c:forEach var="weapon" items="${weapons}">
+                            <c:forEach var="weapon" items="${weaponsl}">
                                 <div class="card">
                                     <img src="http://localhost:8080/assets/img/${weapon.photo}" class="card-img-top" >
                                     <div class="card-body">

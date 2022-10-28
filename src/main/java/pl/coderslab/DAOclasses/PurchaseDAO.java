@@ -28,9 +28,18 @@ public class PurchaseDAO {
         Query query = entityManager.createQuery("SELECT p FROM Purchaser p where p.PESEL=:PESEL");
         query.setParameter("PESEL", PESEL);
         List<Purchaser> wyniki= query.getResultList();
-return wyniki.get(0);
+        return wyniki.get(0);
     }
-
+    public List<String> findAllPesel() {
+        Query query = entityManager.createQuery("SELECT p.PESEL FROM Purchaser p");
+        List<String> wyniki= query.getResultList();
+        return wyniki;
+    }
+    public List<String> findAllEmail() {
+        Query query = entityManager.createQuery("SELECT p.email FROM Purchaser p");
+        List<String> wyniki= query.getResultList();
+        return wyniki;
+    }
     public void delete(Purchaser purchase) {
         entityManager.remove(entityManager.contains(purchase) ?
                 purchase : entityManager.merge(purchase));

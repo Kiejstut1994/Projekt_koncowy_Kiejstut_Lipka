@@ -9,13 +9,13 @@ public class UserPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "password",nullable = false,unique = true)
+    @Column(name = "userpassword",nullable = false,unique = true)
     @Size(min=5,max = 10000,message = "Za krótkie lub za długie hasło")
-    private String password;
+    private String userpassword;
 
-    public UserPassword(int id, String password) {
+    public UserPassword(int id, String userpassword) {
         this.id = id;
-        this.password = password;
+        this.userpassword = userpassword;
 
     }
     public UserPassword() {
@@ -30,13 +30,12 @@ public class UserPassword {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+
+    public String getUserpassword() {
+        return userpassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword;
     }
-
-
 }

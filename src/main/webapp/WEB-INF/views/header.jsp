@@ -4,6 +4,7 @@
 <html lang="en">
 
 <head>
+    <script src="/assets/js/main.js"></script>-->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -46,13 +47,14 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="/mainview/true" class="logo d-flex align-items-center">
-            <img src="assets/img/bron.jpg" alt="" class="rounded-circle">
+            <img src="http://localhost:8080/assets/img/bron2.jpg" alt="" class="rounded-circle">
             <span class="d-none d-lg-block">Broń się</span>
         </a>
 
     </div><!-- End Logo -->
 
 
+    <c:if test="${zalogowany>-1}">
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
@@ -134,21 +136,20 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">${namesurname}</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Kevin Anderson</h6>
-                        <span>Web Designer</span>
+                        <h6>Witaj, ${namesurname} </h6>
+                        <span>Panel kupującego</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="/myprofilepurchaser">
                             <i class="bi bi-person"></i>
                             <span>Mój profil</span>
                         </a>
@@ -158,9 +159,9 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="/changeaddres">
                             <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
+                            <span>Zmień dane adresowe</span>
                         </a>
                     </li>
                     <li>
@@ -168,9 +169,9 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                            <i class="bi bi-question-circle"></i>
-                            <span>Need Help?</span>
+                        <a class="dropdown-item d-flex align-items-center" href="/changepasswordpurchaser">
+                            <i class="bi bi-gear"></i>
+                            <span>Zmień hasło</span>
                         </a>
                     </li>
                     <li>
@@ -189,7 +190,145 @@
 
         </ul>
     </nav><!-- End Icons Navigation -->
+    </c:if>
+<%--    dla pracownika--%>
+    <c:if test="${userzalogowany<1}">
 
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                </li><!-- End Notification Nav -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a><!-- End Messages Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            You have 3 new messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Maria Hudson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>4 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Anna Nelson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>6 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>David Muldon</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>8 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="#">Show all messages</a>
+                        </li>
+
+                    </ul><!-- End Messages Dropdown Items -->
+
+                </li><!-- End Messages Nav -->
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">${usernamesurname}</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>Witaj, ${usernamesurname} </h6>
+                            <span>Panel pracownika</span>
+                        </li>
+<%--                        <li>--%>
+<%--                            <hr class="dropdown-divider">--%>
+<%--                        </li>--%>
+
+<%--                        <li>--%>
+<%--                            <a class="dropdown-item d-flex align-items-center" href="/change">--%>
+<%--                                <i class="bi bi-person"></i>--%>
+<%--                                <span>Mój profil</span>--%>
+<%--                            </a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <hr class="dropdown-divider">--%>
+<%--                        </li>--%>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/changeuserpassword">
+                                <i class="bi bi-gear"></i>
+                                <span>Zmień hasło</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                            <%--                    <li>--%>
+                            <%--                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">--%>
+                            <%--                            <i class="bi bi-question-circle"></i>--%>
+                            <%--                            <span>Need Help?</span>--%>
+                            <%--                        </a>--%>
+                            <%--                    </li>--%>
+<%--                        <li>--%>
+<%--                            <hr class="dropdown-divider">--%>
+<%--                        </li>--%>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Wyloguj</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+    </c:if>
 </header><!-- End Header -->
 
 <!-- ======= Sidebar ======= -->
@@ -262,22 +401,22 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="tables-general.html">
+                    <a href="/opticaccesoriesdisplay/lornetki">
                         <i class="bi bi-circle"></i><span>Lornetki</span>
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
+                    <a href="/opticaccesoriesdisplay/celowniki">
                         <i class="bi bi-circle"></i><span>Celowniki</span>
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
+                    <a href="/opticaccesoriesdisplay/lunety">
                         <i class="bi bi-circle"></i><span>Lunety</span>
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
+                    <a href="/opticaccesoriesdisplay/pozostałe">
                         <i class="bi bi-circle"></i><span>Pozostałe</span>
                     </a>
                 </li>
@@ -290,56 +429,46 @@
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="charts-chartjs.html" class="active">
+                    <a href="/earandeyesrecoverAccesoriesdisplay/wzrok" class="active">
                         <i class="bi bi-circle"></i><span>Ochrona wzroku</span>
                     </a>
                 </li>
                 <li>
-                    <a href="charts-apexcharts.html">
+                    <a href="/earandeyesrecoverAccesoriesdisplay/słuch">
                         <i class="bi bi-circle"></i><span>Ochrona słuchu</span>
                     </a>
                 </li>
-                <!--          <li>-->
-                <!--            <a href="charts-echarts.html">-->
-                <!--              <i class="bi bi-circle"></i><span>ECharts</span>-->
-                <!--            </a>-->
-                <!--          </li>-->
+
             </ul>
         </li><!-- End Charts Nav -->
 
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="index.html">
+            <a class="nav-link collapsed" href="/guncoversdisplay">
                 <i class="bi bi-grid"></i>
                 <span>Szafy na broń</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
 
-        <li class="nav-heading">Pages</li>
-
+        <li class="nav-heading">Działania</li>
+        <c:if test="${zalogowany>-1}">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href="/myprofilepurchaser">
                 <i class="bi bi-person"></i>
                 <span>Mój profil</span>
             </a>
         </li><!-- End Profile Page Nav -->
-
-        <!--      <li class="nav-item">-->
-        <!--        <a class="nav-link collapsed" href="pages-faq.html">-->
-        <!--          <i class="bi bi-question-circle"></i>-->
-        <!--          <span>F.A.Q</span>-->
-        <!--        </a>-->
-        <!--      </li>&lt;!&ndash; End F.A.Q Page Nav &ndash;&gt;-->
-
+        </c:if>
+        <c:if test="${noord==1}">
         <li class="nav-item">
             <a class="nav-link collapsed" href="/shoppingcart">
                 <i class="bi bi-envelope"></i>
                 <span>Koszyk</span>
             </a>
         </li><!-- End Contact Page Nav -->
-
+        </c:if>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/purchaserform">
@@ -384,15 +513,82 @@
             </a>
         </li><!-- End Login Page Nav -->
         <li class="nav-item">
+            <a class="nav-link collapsed" href="/opticaccesoriesform">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Dodaj optykę</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/earandeyesrecoverAccesoriesform">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Dodaj ochronę wzroku i słuchu</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/guncoversform">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Dodaj szafę na broń</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" href="/findbyweaponname">
                 <i class="bi bi-box-arrow-in-right"></i>
-                <span>Zmień dane na temat broni</span>
+                <span>Zmień dane broni</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/findbyammoname">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Zmień dane amunicji</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/findbyopticsname">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Zmień dane akcesoriów optycznych</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/findbyearandeyesrecoverAccesoriesname">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Zmień dane akcesoriów do ochrony słuchu i wzroku</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/findbyguncovername">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Zmień dane szaf na broń</span>
             </a>
         </li><!-- End Login Page Nav -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="/deleteweaponbyname">
                 <i class="bi bi-box-arrow-in-right"></i>
                 <span>Usuń broń</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/deleteammunitions">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Usuń amunicję</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/deleteopticaccesoriesform">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Usuń optykę</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/deleteguncoversform">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Usuń szafę</span>
+            </a>
+        </li><!-- End Login Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/deleteearandeyesrecoverAccesories">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Usuń akcesoria ochronne</span>
             </a>
         </li><!-- End Login Page Nav -->
         <li class="nav-item">
@@ -403,19 +599,6 @@
         </li><!-- End Register Page Nav -->
 
 
-        <!--      <li class="nav-item">-->
-        <!--        <a class="nav-link collapsed" href="pages-error-404.html">-->
-        <!--          <i class="bi bi-dash-circle"></i>-->
-        <!--          <span>Error 404</span>-->
-        <!--        </a>-->
-        <!--      </li>&lt;!&ndash; End Error 404 Page Nav &ndash;&gt;-->
-
-        <!--      <li class="nav-item">-->
-        <!--        <a class="nav-link collapsed" href="pages-blank.html">-->
-        <!--          <i class="bi bi-file-earmark"></i>-->
-        <!--          <span>Blank</span>-->
-        <!--        </a>-->
-        <!--      </li>&lt;!&ndash; End Blank Page Nav &ndash;&gt;-->
 
     </ul>
 

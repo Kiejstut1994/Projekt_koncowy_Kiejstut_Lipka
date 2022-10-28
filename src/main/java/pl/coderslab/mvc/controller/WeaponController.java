@@ -2,17 +2,17 @@ package pl.coderslab.mvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.DAOclasses.OrdersDAO;
 import pl.coderslab.DAOclasses.WeaponsDAO;
 import pl.coderslab.classes.Orders;
 import pl.coderslab.classes.Weapons;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +20,15 @@ import java.util.List;
 public class WeaponController {
     private final WeaponsDAO weaponsDAO;
     private final OrdersDAO ordersDAO;
+    @ModelAttribute("typewepon")
+    public Collection<String> typesofwepon() {
+        List<String> types = new ArrayList<String>();
+        types.add("długa");
+        types.add("krótka");
+        types.add("kolekcjonerska");
+        types.add("do paintballa");
+        return types;
+    }
 
     public WeaponController(WeaponsDAO weaponsDAO, OrdersDAO ordersDAO) {
         this.weaponsDAO = weaponsDAO;
@@ -29,114 +38,106 @@ public class WeaponController {
     public String findname(Model model) {
         List<Weapons> weapons=weaponsDAO.findall();
         model.addAttribute("weapons",weapons);
+        model.addAttribute("maxwep",weaponsDAO.maxwep());
         return "findbyweaponname";
     }
     @RequestMapping(value = "/findbyweaponname", method = RequestMethod.POST)
-    public String findnamepost(@RequestParam String name) {
-        List<String> names=weaponsDAO.findallname();
-        Iterator<String> iterator= names.iterator();
-        boolean zawiera=false;
-        while (iterator.hasNext()) {
-            String next=iterator.next();
-            if(next.equals(name))
-            {
-                zawiera=true;
-            }
-        }
-        if (zawiera) {
-            return "redirect:changeweapondata/" + name;
-        }else {
+    public String findnamepost(@RequestParam int id) {
+        Weapons weapons=weaponsDAO.findById(id);
+        if (weapons==null) {
             return "redirect:findbyweaponname";
+        }else {
+            return "redirect:changeweapondata/" + id;
         }
+
     }
 @RequestMapping(value = "/addweapon/{id}",method = RequestMethod.GET)
 public String addweapon(@PathVariable("id") int id, HttpSession ses){
     Weapons weapons=weaponsDAO.findById(id);
-        int ord=(int) ses.getAttribute("noord");
+    List<Weapons> weaponsList=(List<Weapons>) ses.getAttribute("weaponslist");
         int zalogowany=(int) ses.getAttribute("zalogowany");
-        if(ord==0)
+        if(weaponsList==null)
         {
-            Orders orders=new Orders();
-            orders.setPuchaserid(zalogowany);
-            List<Weapons> weaponsList=new ArrayList<>();
-            weaponsList.add(weapons);
-            orders.setWeapons(weaponsList);
-            orders.setPrice(weapons.getPrice());
-            orders.setPaid(false);
-            ses.setAttribute("noord",orders.getId());
-            ordersDAO.saveOrders(orders);
+            ses.setAttribute("noord",1);
+            List<Weapons> bron=new ArrayList<>();
+            bron.add(weapons);
+            ses.setAttribute("weaponslist",bron);
             }else {
-            Orders orders=ordersDAO.findById(ord);
-            List<Weapons> weaponsList=orders.getWeapons();
             weaponsList.add(weapons);
-            orders.setWeapons(weaponsList);
-            orders.setPrice(orders.getPrice()+weapons.getPrice());
-            ordersDAO.updateorders(orders);
+            ses.setAttribute("weaponslist",weaponsList);
         }
+
         return "redirect:/shoppingcart";
         }
-    @RequestMapping(value = "/changeweapondata/{name}", method = RequestMethod.GET)
-    public String updateweaponget(@PathVariable("name") String name,Model model) {
-        model.addAttribute("name",name);
+    @RequestMapping(value = "/changeweapondata/{id}", method = RequestMethod.GET)
+    public String updateweaponget(@PathVariable("id") int id,Model model) {
+        Weapons weapons=weaponsDAO.findById(id);
+        model.addAttribute("weapontochange",weapons);
+        model.addAttribute("perswepon",new Weapons());
+
         return "changeweapondata";
     }
-    @RequestMapping(value = "/changeweapondata/{name}", method = RequestMethod.POST)
-    public String updateweaponpost(@PathVariable("name") String name,@RequestParam int price,@RequestParam int rating,@RequestParam String photo) {
-        int licznik=0;//jak nic nie zmienieamy ma się nic nie wykonywać
+    @RequestMapping(value = "/changeweapondata/{id}", method = RequestMethod.POST)
+    public String updateweaponpost(@PathVariable("id") int id,@Valid Weapons weapons, BindingResult result) {
+        if(result.hasErrors())
+        {
+            return "changeweapondata/"+id;
+        }
+        Weapons weaponsold=weaponsDAO.findById(id);
+        weaponsold.setName(weapons.getName());
+        weaponsold.setWeight(weapons.getWeight());
+        weaponsold.setProducent(weapons.getProducent());
+        weaponsold.setPrice(weapons.getPrice());
+        weaponsold.setCaliber(weapons.getCaliber());
+        weaponsold.setRating(weapons.getRating());
+        weaponsold.setType(weapons.getType());
+        weaponsold.setPhoto(weapons.getPhoto());
 
-        Weapons weapons=weaponsDAO.findbyname(name);
-
-        if (price>0)
-        {
-            weapons.setPrice(price);
-            licznik++;
-        }
-        if (rating>0)
-        {
-            weapons.setRating(rating);
-            licznik++;
-        }
-        if (photo.length()>0)
-        {
-            weapons.setPhoto(photo);
-            licznik++;
-        }
-        if (licznik>0)
-        {
-            weaponsDAO.update(weapons);
-        }
+        weaponsDAO.update(weaponsold);
         return "changedata";
     }
     @RequestMapping(value = "/changedata", method = RequestMethod.GET)
     public String changedatae() {
-
         return "changedata";
     }
     @RequestMapping(value = "/deleteweaponbyname", method = RequestMethod.GET)
     public String findtodeletename(Model model) {
         List<Weapons> weapons=weaponsDAO.findall();
         model.addAttribute("weapons",weapons);
+        model.addAttribute("maxwep",weaponsDAO.maxwep());
         return "deleteweaponbyname";
     }
     @RequestMapping(value = "/deleteweaponbyname", method = RequestMethod.POST)
-    public String findtodeletenamepost(@RequestParam String name) {
-        List<String> names=weaponsDAO.findallname();
-        Iterator<String> iterator= names.iterator();
-        boolean zawiera=false;
-        while (iterator.hasNext()) {
-            String next=iterator.next();
-            if(next.equals(name))
-            {
-                zawiera=true;
-            }
-        }
-        if (zawiera) {
-            Weapons weapons=weaponsDAO.findbyname(name);
-            weaponsDAO.delete(weapons);
-            return "redirect:changedata";
-
-        }else {
+    public String findtodeletenamepost(@RequestParam int id) {
+        Weapons weapons=weaponsDAO.findById(id);
+        if (weapons==null) {
             return "redirect:deleteweaponbyname";
+        }else {
+            weaponsDAO.delete(weapons);
+            return "redirect:/mainview/true";
         }
+    }
+    @RequestMapping(value = "/weaponsform", method = RequestMethod.GET)
+    public String addweapon(Model model,@ModelAttribute("typewepon") List<String> typewepon) {
+        model.addAttribute("typewepon",typewepon);
+        model.addAttribute("weapons", new Weapons());
+        return "weaponsform";
+    }
+    @RequestMapping(value = "/weaponsform", method = RequestMethod.POST)
+    public String saveeapon(@Valid Weapons weapons, BindingResult result) {
+        if(result.hasErrors()){
+            return "weaponsform";
+        }
+        weaponsDAO.saveWeapons(weapons);
+        return "mainview";
+    }
+
+    @RequestMapping(value = "/deleteweaponfromlist/{id}",method = RequestMethod.GET)
+    public String deleteweaponfromlist(@PathVariable("id") int id, HttpSession ses){
+        Weapons weapons=weaponsDAO.findById(id);
+        List<Weapons> weaponsList=(List<Weapons>) ses.getAttribute("weaponslist");
+        weaponsList.remove(weapons);
+        ses.setAttribute("weaponslist",weaponsList);
+        return "redirect:/shoppingcart";
     }
 }

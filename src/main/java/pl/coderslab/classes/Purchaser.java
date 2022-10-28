@@ -19,12 +19,11 @@ public class Purchaser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name",nullable = false)
-    @Size(min=5,message="Musi mieć więcej niż 5 liter")
+    @Size(min=5,max = 30,message="Musi mieć więcej niż 5 liter i mniej niż 30")
     private String name;
     @Column(name = "surname",nullable = false)
-    @Size(min=3,message="Musi mieć więcej niż 3 liter")
+    @Size(min=5,max = 30,message="Musi mieć więcej niż 5 liter i mniej niż 30")
     private String surname;
-    //hasło do oddzielnej encji, zahashowane
     @Column(name = "PESEL",nullable = false,length=11,unique = true)
     @PESEL(message="11 cyfr dokładnie")
     private String PESEL;

@@ -12,6 +12,7 @@ import pl.coderslab.classes.User;
 import pl.coderslab.classes.UserPassword;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/emailandlisenceveryfication/{id}", method = RequestMethod.POST)
-    @ResponseBody
+
     public String emailch(@PathVariable("id") int id,@RequestParam String[] weryf) {
         Purchaser purchaser =purchasedao.findById(id);
         if (weryf.length==2) {
@@ -63,8 +64,8 @@ public class UserController {
             purchasedao.update(purchaser);
         }
 
+        return "redirect:/veryficated";
 
-        return "<a href=\"http://localhost:8080/veryficated\">Sukces, przejdz dalej</a>";
 
     }
     @RequestMapping(value = "/veryficated", method = RequestMethod.GET)
@@ -74,9 +75,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/loginformuser", method = RequestMethod.GET)
-    public String loginuserform() {
-
-
+    public String loginuserform(HttpSession session) {
+        session.setAttribute("userzalogowany",1);
         return "/loginformuser";
     }
 
@@ -84,12 +84,14 @@ public class UserController {
 
 
     @RequestMapping(value = "/loginformuser", method = RequestMethod.POST)
-    public String loginuser(@RequestParam String name,@RequestParam String surname,@RequestParam String password) {
+    public String loginuser(@RequestParam String name,@RequestParam String surname,@RequestParam String password,HttpSession session) {
 
         User user = userDAO.findByNameandSurname(name, surname);
         UserPassword userPassword=user.getUserPassword();
 
-        if (BCrypt.checkpw(password,userPassword.getPassword())){
+        if (BCrypt.checkpw(password,userPassword.getUserpassword())){
+            session.setAttribute("userzalogowany",-user.getId());
+            session.setAttribute("usernamesurname",user.getName()+" "+user.getSurname());
             return "userlogresult";
         }else {
             return "loginformuser";
@@ -99,59 +101,58 @@ public class UserController {
 
     @RequestMapping(value = "/userform", method = RequestMethod.GET)
     public String getFrom(Model model) {
-
         model.addAttribute("user", new User());
-
         return "userform";
     }
     @RequestMapping(value = "/userform", method = RequestMethod.POST)
-    public String addpurchase(@Valid User user, BindingResult result1, Model model) {
-
-
+    public String addpurchase(@Valid User user, BindingResult result1, Model model, HttpSession session) {
         if (result1.hasErrors()) {
             return "userform";
         }
-
-        userDAO.saveUser(user);
-        model.addAttribute("user_id",user.getId());
-
+        session.setAttribute("newuser",user);
         return "redirect:/userpasswordform";
     }
     @RequestMapping(value = "/userpasswordform", method = RequestMethod.GET)
-    public String getFrom(Model model, @RequestParam int user_id) {
-
+    public String getpaswordFrom(Model model) {
         model.addAttribute("userpassword", new UserPassword());
-        model.addAttribute("user_id",user_id);
-
-
-
         return "userpasswordform";
     }
-    @RequestMapping(value = "/userpasswordform/{id}", method = RequestMethod.POST)
-    public String addpassword(@Valid UserPassword userPassword, BindingResult result,@PathVariable("id") int id,Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("userpassword", new UserPassword());
-            model.addAttribute("user_id",id);
+    @RequestMapping(value = "/userpasswordform", method = RequestMethod.POST)
+    public String addpassword(@Valid UserPassword userPassword, BindingResult result2,Model model,HttpSession session) {
+        if (result2.hasErrors()) {
             return "userpasswordform";
         }
-
-        User user=userDAO.findById(id);
+        userPassword.setUserpassword(BCrypt.hashpw(userPassword.getUserpassword(), BCrypt.gensalt()));
+        User user=(User) session.getAttribute("newuser");
         user.setUserPassword(userPassword);
-        userDAO.update(user);
-        userPassword.setPassword(BCrypt.hashpw(userPassword.getPassword(), BCrypt.gensalt()));
-userPaswordDAO.update(userPassword);
-
+        userDAO.saveUser(user);
         return "redirect:/userresult";
     }
     @RequestMapping(value = "/userresult", method = RequestMethod.GET)
     public String result() {
-
         return "userresult";
     }
+    @RequestMapping(value = "/changeuserpassword", method = RequestMethod.GET)
+    public String getchangepaswordFrom(Model model) {
+        model.addAttribute("userpassword", new UserPassword());
+        return "changeuserpassword";
+    }
 
+    @RequestMapping(value = "/changeuserpassword", method = RequestMethod.POST)
+    public String addnewpassword(@Valid UserPassword userPassword, BindingResult result,Model model,HttpSession session) {
+        if (result.hasErrors()) {
+            return "userpasswordform";
+        }
+        int userid=(int) session.getAttribute("userzalogowany");
+        User user=userDAO.findById(-userid);
+        UserPassword userPasswordold=user.getUserPassword();
+        userPassword.setUserpassword(BCrypt.hashpw(userPassword.getUserpassword(), BCrypt.gensalt()));
+        userPasswordold.setUserpassword(userPassword.getUserpassword());
+        return "redirect:/changedata";
+    }
     @RequestMapping(value = "/userlogresult", method = RequestMethod.GET)
     public String usresult() {
-
         return "userlogresult";
     }
 }
+

@@ -23,43 +23,54 @@
                         <h5 class="card-title">Twoje zamówienie</h5>
 
                         <div  class="col-md-4">
-                            <c:forEach items="${orders}" var="order">
-                                <c:forEach items="${order.weapons}" var="ordwepon">
-                                ${ordwepon.name}
-                                    ${ordwepon.price}
 
+                                <c:forEach items="${weaponslist}" var="weaponsord">
+                                ${weaponsord.name}
+                                    </br>
 
+                                    ${weaponsord.price}
+                                    </br>
+                                    <button class="btn btn-primary" type="submit"><a href="/deleteweaponfromlist/${weaponsord.id}">Usuń z koszyka</a></button>
                                 </c:forEach>
+                            </br>
+                            <c:forEach items="${ammunitionlist}" var="ammunitionord">
+                                ${ammunitionord.name}
+                                </br>
+                                ${ammunitionord.price}
+                                </br>
 
-
+                                <button class="btn btn-primary" type="submit"><a href="/deleteammunitionfromlist/${ammunitionord.id}">Usuń z koszyka</a></button>
                             </c:forEach>
-<%--                            <c:forEach items="${orders}" var="order">--%>
-<%--                                <c:forEach items="${order.getGuncovers()}" var="ordguncov">--%>
-<%--                                    ${ordguncov.getName()}--%>
-<%--                                    ${ordguncov.getPrice()}--%>
 
+                            <c:forEach items="${earandeyesrecoverAccesorieslist}" var="earandeyesrecoverAccesoriesord">
+                                ${earandeyesrecoverAccesoriesord.name}
+                                </br>
+                                ${earandeyesrecoverAccesoriesord.price}
+                                </br>
 
-<%--                                </c:forEach>--%>
+                                <button class="btn btn-primary" type="submit"><a href="/deleteearandeyesrecoverAccesoriesfromlist/${earandeyesrecoverAccesoriesord.id}">Usuń z koszyka</a></button>
+                            </c:forEach>
 
+                            <c:forEach items="${guncoverslist}" var="guncoversord">
+                                ${guncoversord.name}
+                                </br>
+                                ${guncoversord.price}
+                                </br>
 
-<%--                            </c:forEach>--%>
-<%--                            <c:forEach items="${orders}" var="order">--%>
-<%--                                <c:forEach items="${ordereareyes.getEarandeyesrecoverAccesories()}" var="ordereareye">--%>
-<%--                                    ${ordereareye.getName()}--%>
-<%--                                    ${ordereareye.getPrice()}--%>
-<%--                                </c:forEach>--%>
+                                <button class="btn btn-primary" type="submit"><a href="/deleteguncoversfromlist/${guncoversord.id}">Usuń z koszyka</a></button>
+                            </c:forEach>
 
+                            <c:forEach items="${opticaccesorieslist}" var="opticaccesoriesord">
+                                ${opticaccesoriesord.name}
+                                </br>
+                                ${opticaccesoriesord.price}
+                                </br>
 
-<%--                            </c:forEach>--%>
-<%--                            <c:forEach items="${orders}" var="order">--%>
-<%--                                <c:forEach items="${orderamm.getAmmunitions()}" var="orderamm">--%>
-<%--                                    ${orderamm.getName()}--%>
-<%--                                    ${orderamm.getPrice()}--%>
-<%--                                </c:forEach>--%>
+                                <button class="btn btn-primary" type="submit"><a href="/deleteopticaccesoriesfromlist/${opticaccesoriesord.id}">Usuń z koszyka</a></button>
+                            </c:forEach>
 
-
-<%--                            </c:forEach>--%>
                         </div>
+
 
                     </div>
 
@@ -73,11 +84,18 @@
                         ${purchaseraddres.flatnumber}
                         ${purchaseraddres.postcode}
                         <div  class="col-md-4">
-
-
                         </div>
 
                     </div>
+                    <c:if test="${canbuy==1}">
+                    <h5 class="card-title">Zapłać</h5>
+
+                        <button class="btn btn-primary" type="submit"><a href="/payform">Płacę</a></button>
+                    </c:if>
+<c:if test="${canbuy==0}">
+    <h5 class="card-title">Aby zapłacić musisz potwierdzić adres email i licencję na broń</h5>
+</c:if>
+
 
                 </div>
             </div>

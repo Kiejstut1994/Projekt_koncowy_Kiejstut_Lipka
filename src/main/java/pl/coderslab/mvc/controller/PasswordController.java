@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.DAOclasses.PasswordDAO;
 import pl.coderslab.DAOclasses.PurchaseDAO;
+import pl.coderslab.classes.Address;
 import pl.coderslab.classes.Password;
 import pl.coderslab.classes.Purchaser;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -26,28 +28,34 @@ public class PasswordController {
 
 
     @RequestMapping(value = "/passwordform", method = RequestMethod.GET)
-    public String getFrom(Model model, @RequestParam int purchaser_id) {
-
+    public String getFrom(Model model) {
         model.addAttribute("password", new Password());
-        model.addAttribute("purchaser_id",purchaser_id);
-
-
         return "passwordform";
     }
-    @RequestMapping(value = "/passwordform/{id}", method = RequestMethod.POST)
-    public String addpassword(Model model, @Valid Password password, BindingResult result,@PathVariable("id") int id) {
+    @RequestMapping(value = "/passwordform", method = RequestMethod.POST)
+    public String addpassword(Model model, @Valid Password password, BindingResult result, HttpSession ses) {
         if (result.hasErrors()) {
-            model.addAttribute("purchaser_id",id);
             return "passwordform";
         }
-
-        Purchaser purchaser=purchaseDAO.findById(id);
-        purchaser.setPassword(password);
-        purchaseDAO.update(purchaser);
         password.setPassword(BCrypt.hashpw(password.getPassword(), BCrypt.gensalt()));
-        passwordDAO.update(password);
-        model.addAttribute("purchaser_id",purchaser.getId());
-//        passwordDAO.savePassword(password);
+        ses.setAttribute("newpassword",password);
         return "redirect:/addressform";
+    }
+    @RequestMapping(value = "/changepasswordpurchaser", method = RequestMethod.GET)
+    public String changegetFrom(Model model) {
+        model.addAttribute("password", new Password());
+        return "changepasswordpurchaser";
+    }
+    @RequestMapping(value = "/changepasswordpurchaser", method = RequestMethod.POST)
+    public String changeaddpassword(Model model, @Valid Password password, BindingResult result, HttpSession ses) {
+        if (result.hasErrors()) {
+            return "changepasswordpurchaser";
+        }
+        password.setPassword(BCrypt.hashpw(password.getPassword(), BCrypt.gensalt()));
+        Purchaser purchaser=purchaseDAO.findById((int)ses.getAttribute("zalogowany"));
+        Password password1=purchaser.getPassword();
+        password1.setPassword(password.getPassword());
+        passwordDAO.update(password1);
+        return "redirect:/changedata";
     }
 }

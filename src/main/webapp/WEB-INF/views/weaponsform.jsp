@@ -10,7 +10,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Formularz logowania</h1>
+        <h1>Dodaj broń</h1>
 
     </div><!-- End Page Title -->
 
@@ -23,30 +23,40 @@
                         <h5 class="card-title">Dodaj broń</h5>
                         <div  class="col-md-4">
                             <form:form class="row g-3" action="/weaponsform" method="post" modelAttribute="weapons" >
+                                Nazwa:
                                 <form:input path="name" name="name" placeholder="Nazwa" class="form-control" />
                                 <form:errors path="name" />
+                                </br>
                                 Masa z wypełnionym magazynkiem:
-                                <form:input path="weight" name="weight" placeholder="Masa(kg)" class="form-control" type="number" step="0.01" />
+                                <form:input path="weight" name="weight" placeholder="Masa(kg)" class="form-control" type="number" min="0" step="0.01" />
                                 <form:errors path="weight" />
+                                </br>
+                                Producent:
                                 <form:input path="producent" name="producent" placeholder="Producent" class="form-control" />
                                 <form:errors path="producent" />
+                                </br>
                                 Cena broni:
-                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" step="0.01" />
+                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" min="1" step="0.01" />
                                 <form:errors path="price" />
+                                </br>
+                                Kaliber:
                                 <form:input path="caliber" name="caliber" placeholder="Kaliber" class="form-control" />
                                 <form:errors path="caliber" />
+                                </br>
                                 Ocena:
-                                <form:input path="rating" name="rating" placeholder="Ocena" class="form-control" type="number" step="0.1" />
+                                <form:input path="rating" name="rating" placeholder="Ocena" class="form-control" type="number" min="0" max="10" step="0.1" />
                                 <form:errors path="rating" />
                                 Wybierz typ broni
-                                <input type="checkbox" name="type" value="długa"/>Broń długa
-                                <input type="checkbox" name="type" value="krótka"/>Broń krótka
-                                <input type="checkbox" name="type" value="kolekcjonerska"/>Broń kolekcjonerska
-                                <input type="checkbox" name="type" value="do paintballa"/>Broń do paintballa
+                                <c:forEach items="${typewepon}" var="typewepo">
+                                    <form:radiobutton path="type" multiple="false" value="${typewepo}" /> Broń ${typewepo}
+                                </c:forEach>
+                                <form:errors path="type" />
+                                </br>
                                 Nazwa zdjęcia(proszę wstawić plik jpg do pliku /assets/img)
                                 <form:input path="photo" name="photo" class="form-control"/>
                                 <form:errors path="photo" />
-                                <button class="btn btn-primary" type="submit">Wstaw</button>
+                                </br>
+                                <button class="btn btn-primary" type="submit">Dodaj broń</button>
                             </form:form>
                         </div>
 

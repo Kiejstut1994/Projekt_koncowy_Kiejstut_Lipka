@@ -7,7 +7,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Podaj nazwę broni którą chcesz zmienić </h1>
+        <h1>Usuń broń </h1>
 
     </div><!-- End Page Title -->
 
@@ -20,11 +20,11 @@
                         <h5 class="card-title">Podaj nazwę broni którą chcesz usunąć</h5>
                         <div  class="col-md-4">
                             <form class="row g-3" action="/deleteweaponbyname" method="post"  >
-                                <input name="name" placeholder="nazwa broni" type="text"  class="form-control" />
+                                <input name="id" placeholder="id broni" type="number" min="1" max="${maxwep}"  class="form-control" />
                                 <button class="btn btn-primary" type="submit">Submit form</button>
                                 Lista nazw broni w sklepie
                                 <c:forEach var="weapon" items="${weapons}">
-                                    <p class="card-text">${weapon.name}</p>
+                                    <p class="card-text">${weapon.id}.${weapon.name}</p>
                                 </c:forEach>
                             </form>
 
