@@ -6,10 +6,7 @@ import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -18,17 +15,18 @@ public class Purchaser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "name")
     @Size(min=5,max = 30,message="Musi mieć więcej niż 5 liter i mniej niż 30")
     private String name;
-    @Column(name = "surname",nullable = false)
+    @Column(name = "surname")
     @Size(min=5,max = 30,message="Musi mieć więcej niż 5 liter i mniej niż 30")
     private String surname;
-    @Column(name = "PESEL",nullable = false,length=11,unique = true)
+    @Column(name = "PESEL",length=11,unique = true)
     @PESEL(message="11 cyfr dokładnie")
     private String PESEL;
-    @Column(name = "email",nullable = false,unique = true)
+    @Column(name = "email",unique = true)
     @Email(message = "Za krótka przednia część lub brak @")
+    @NotEmpty(message = "Pole email nie może być puste")
     private String email;
     @Column(name = "emailveryfication",nullable = false)
     private boolean emailveryfication;

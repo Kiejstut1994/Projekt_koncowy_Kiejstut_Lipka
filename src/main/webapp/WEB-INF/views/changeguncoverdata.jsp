@@ -24,11 +24,11 @@
                         <div  class="col-md-4">
                             <form:form class="row g-3" action="/changeguncoverdata/${changeguncovers.id}" method="post" modelAttribute="perguncover" >
                                 Nazwa:
-                                <form:input path="name" name="name" placeholder="Nazwa" class="form-control" />
+                                <form:input path="name" name="name" placeholder="Nazwa" class="form-control" type="text" />
                                 <form:errors path="name" />
                                 </br>
                                 Cena:
-                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" min="1" step="0.01" />
+                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" step="0.01" />
                                 <form:errors path="price" />
                                 </br>
                                 Opis:

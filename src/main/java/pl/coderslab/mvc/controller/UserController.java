@@ -1,12 +1,15 @@
 package pl.coderslab.mvc.controller;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.DAOclasses.OrdersDAO;
 import pl.coderslab.DAOclasses.PurchaseDAO;
 import pl.coderslab.DAOclasses.UserDAO;
 import pl.coderslab.DAOclasses.UserPaswordDAO;
+import pl.coderslab.classes.Orders;
 import pl.coderslab.classes.Purchaser;
 import pl.coderslab.classes.User;
 import pl.coderslab.classes.UserPassword;
@@ -20,11 +23,13 @@ public class UserController {
     public final PurchaseDAO purchasedao;
     public final UserDAO userDAO;
     public final UserPaswordDAO userPaswordDAO;
+    public final OrdersDAO ordersDAO;
 
-    public UserController(PurchaseDAO purchasedao, UserDAO userDAO, UserPaswordDAO userPaswordDAO) {
+    public UserController(PurchaseDAO purchasedao, UserDAO userDAO, UserPaswordDAO userPaswordDAO, OrdersDAO ordersDAO) {
         this.purchasedao = purchasedao;
         this.userDAO = userDAO;
         this.userPaswordDAO = userPaswordDAO;
+        this.ordersDAO = ordersDAO;
     }
 
     @RequestMapping(value = "/findbyPESEL", method = RequestMethod.GET)
@@ -79,10 +84,6 @@ public class UserController {
         session.setAttribute("userzalogowany",1);
         return "/loginformuser";
     }
-
-
-
-
     @RequestMapping(value = "/loginformuser", method = RequestMethod.POST)
     public String loginuser(@RequestParam String name,@RequestParam String surname,@RequestParam String password,HttpSession session) {
 
@@ -92,6 +93,8 @@ public class UserController {
         if (BCrypt.checkpw(password,userPassword.getUserpassword())){
             session.setAttribute("userzalogowany",-user.getId());
             session.setAttribute("usernamesurname",user.getName()+" "+user.getSurname());
+            session.setAttribute("existnotpaidacticver",ordersDAO.existsnotpaidnotactive());
+            session.setAttribute("ordersnotactvenotpaid",ordersDAO.allunpaidandnotactive());
             return "userlogresult";
         }else {
             return "loginformuser";
@@ -118,7 +121,8 @@ public class UserController {
         return "userpasswordform";
     }
     @RequestMapping(value = "/userpasswordform", method = RequestMethod.POST)
-    public String addpassword(@Valid UserPassword userPassword, BindingResult result2,Model model,HttpSession session) {
+    public String addpassword(@Valid UserPassword userPassword, BindingResult result2,HttpSession session) {
+        System.out.println(userPassword.getUserpassword());
         if (result2.hasErrors()) {
             return "userpasswordform";
         }
@@ -151,8 +155,29 @@ public class UserController {
         return "redirect:/changedata";
     }
     @RequestMapping(value = "/userlogresult", method = RequestMethod.GET)
-    public String usresult() {
+    public String usresult(HttpSession session) {
+        session.setAttribute("existnotpaidacticver",ordersDAO.existsnotpaidnotactive());
+        session.setAttribute("ordersnotactvenotpaid",ordersDAO.allunpaidandnotactive());
         return "userlogresult";
     }
+    @RequestMapping(value = "/veryfpaid/{id}", method = RequestMethod.GET)
+    public String veryfpaid(@PathVariable("id") int id) {
+    Orders orders=ordersDAO.findById(id);
+    orders.setPaid(true);
+    ordersDAO.updateorders(orders);
+        return "redirect:/userlogresult";
+    }
+    @RequestMapping(value = "/veryfactive/{id}", method = RequestMethod.GET)
+    public String veryfactive(@PathVariable("id") int id) {
+        Orders orders=ordersDAO.findById(id);
+        orders.setActive(true);
+        ordersDAO.updateorders(orders);
+        return "redirect:/userlogresult";
+    }
+
+
+
+
+
 }
 

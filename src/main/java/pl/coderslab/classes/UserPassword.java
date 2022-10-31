@@ -9,7 +9,7 @@ public class UserPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "userpassword",nullable = false,unique = true)
+    @Column(name = "userpassword")
     @Size(min=5,max = 10000,message = "Za krótkie lub za długie hasło")
     private String userpassword;
 

@@ -117,6 +117,9 @@ public class AmmunitionController {
             amunicja.add(ammunition);
             ses.setAttribute("ammunitionlist",amunicja);
         }else {
+            int noord=(int) ses.getAttribute("noord");
+            noord++;
+            ses.setAttribute("noord",noord);
             ammunitionList.add(ammunition);
             ses.setAttribute("ammunitionlist",ammunitionList);
         }
@@ -127,14 +130,9 @@ public class AmmunitionController {
     public String deletefromlistammo(@PathVariable("id") int id, HttpSession ses){
         Ammunition ammunition=ammunitionDAO.findById(id);
         List<Ammunition> ammunitionList=(List<Ammunition>) ses.getAttribute("ammunitionlist");
-        Iterator<Ammunition> iterator=ammunitionList.iterator();
-        while (iterator.hasNext()){
-            if((iterator.next()).equals(ammunition)){
-                iterator.remove();
-            }
-        }
+        ammunitionList.remove(ammunition);
         ses.setAttribute("ammunitionlist",ammunitionList);
-                    return "redirect:/shoppingcart";
+            return "redirect:/shoppingcart";
     }
 
 }

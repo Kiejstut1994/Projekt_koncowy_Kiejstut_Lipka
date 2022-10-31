@@ -41,8 +41,8 @@ public class OpticAccesoriesController {
     }
 
     @RequestMapping(value = "/opticaccesoriesform", method = RequestMethod.POST)
-    public String saveeapon(@Valid OpticAccesories opticAccesories, BindingResult result10,Model model,@ModelAttribute("typesofopticacessories") List<String> typesofopticacessories) {
-        if(result10.hasErrors()){
+    public String saveeapon(@Valid OpticAccesories opticAccesories, BindingResult result,Model model,@ModelAttribute("typesofopticacessories") List<String> typesofopticacessories) {
+        if(result.hasErrors()){
             model.addAttribute("typesofopticacessories",typesofopticacessories);
             return "opticaccesoriesform";
         }
@@ -119,6 +119,9 @@ public class OpticAccesoriesController {
             optyka.add(opticAccesories);
             ses.setAttribute("opticaccesorieslist",optyka);
         }else {
+            int noord=(int) ses.getAttribute("noord");
+            noord++;
+            ses.setAttribute("noord",noord);
             opticaccesorieslist.add(opticAccesories);
             ses.setAttribute("opticaccesorieslist",opticaccesorieslist);
         }
@@ -129,8 +132,9 @@ public class OpticAccesoriesController {
     public String deleteoptics(@PathVariable("id") int id, HttpSession ses){
         OpticAccesories opticAccesories=opticAccesoriesDAO.findById(id);
         List<OpticAccesories> opticaccesorieslist=(List<OpticAccesories>) ses.getAttribute("opticaccesorieslist");
-            opticaccesorieslist.add(opticAccesories);
+            opticaccesorieslist.remove(opticAccesories);
             ses.setAttribute("opticaccesorieslist",opticaccesorieslist);
-        return "redirect:/shoppingcart";
-    }
+            return "redirect:/shoppingcart";
+        }
+
 }

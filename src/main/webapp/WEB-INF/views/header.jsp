@@ -71,25 +71,25 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
+                    <span class="badge bg-success badge-number">${numbrermyorders}</span>
                 </a><!-- End Messages Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
-                        You have 3 new messages
+                       Moje zamówienia
                         <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-
+<c:forEach items="${myorders}" var="myorder">
                     <li class="message-item">
                         <a href="#">
                             <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
                             <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>4 hrs. ago</p>
+                                <h4>Zamówienie numer ${myorder.id}</h4>
+                                <p><c:if test="${myorder.paid==true}">Zamówienie opłacono i potwierdzono</c:if></p>
+                                <p><c:if test="${myorder.active==true}">Zamówienie wysłano</c:if></p>
                             </div>
                         </a>
                     </li>
@@ -97,37 +97,10 @@
                         <hr class="dropdown-divider">
                     </li>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Anna Nelson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>6 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    </c:forEach>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>David Muldon</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>8 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
 
-                    <li class="dropdown-footer">
-                        <a href="#">Show all messages</a>
-                    </li>
+
 
                 </ul><!-- End Messages Dropdown Items -->
 
@@ -194,6 +167,7 @@
 <%--    dla pracownika--%>
     <c:if test="${userzalogowany<1}">
 
+
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
@@ -209,14 +183,15 @@
 
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                        <span class="badge bg-success badge-number">${existnotpaidacticver}</span>
                     </a><!-- End Messages Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                         <li class="dropdown-header">
-                            You have 3 new messages
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                            Wykonano ${existnotpaidacticver} zamówień, jeśli możesz obsłuż je
+<%--                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>--%>
                         </li>
+        <c:forEach var="ordnotpaidnotactive" items="${ordersnotactvenotpaid}">
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -225,51 +200,29 @@
                             <a href="#">
                                 <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
                                 <div>
-                                    <h4>Maria Hudson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>4 hrs. ago</p>
+                                    <h4>Zamówienie numer: ${ordnotpaidnotactive.id}</h4>
+                                    <c:if test="${ordnotpaidnotactive.paid==false}">
+                                    <p>Potwierdź opłacenie zamówienia  <a href="/veryfpaid/${ordnotpaidnotactive.id}">Zatwierdź</a> </p>
+                                    </c:if>
+                                    <c:if test="${ordnotpaidnotactive.active==false}">
+                                    <p>Potwierdź wysłanie zamówienia <a href="/veryfactive/${ordnotpaidnotactive.id}">Zatwierdź</a> </p>
+                                    </c:if>
                                 </div>
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        </c:forEach>
 
-                        <li class="message-item">
-                            <a href="#">
-                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                                <div>
-                                    <h4>Anna Nelson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>6 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                                <div>
-                                    <h4>David Muldon</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>8 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">Show all messages</a>
-                        </li>
+<%--                        <li class="dropdown-footer">--%>
+<%--                            <a href="#">Show all messages</a>--%>
+<%--                        </li>--%>
 
                     </ul><!-- End Messages Dropdown Items -->
 
                 </li><!-- End Messages Nav -->
+
 
                 <li class="nav-item dropdown pe-3">
 

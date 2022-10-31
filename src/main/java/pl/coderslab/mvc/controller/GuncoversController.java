@@ -108,6 +108,9 @@ public class GuncoversController {
             szafy.add(guncovers);
             ses.setAttribute("guncoverslist",szafy);
         }else {
+            int noord=(int) ses.getAttribute("noord");
+            noord++;
+            ses.setAttribute("noord",noord);
             guncoversList.add(guncovers);
             ses.setAttribute("guncoverslist",guncoversList);
         }
@@ -120,6 +123,8 @@ public class GuncoversController {
         List<Guncovers> guncoversList=(List<Guncovers>) ses.getAttribute("guncoverslist");
             guncoversList.remove(guncovers);
             ses.setAttribute("guncoverslist",guncoversList);
-        return "redirect:/shoppingcart";
+
+            return "redirect:/shoppingcart";
+
     }
 }

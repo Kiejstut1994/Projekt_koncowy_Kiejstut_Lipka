@@ -26,7 +26,7 @@
                         <div  class="col-md-4">
 
                             <form:form class="row g-3" action="/userpasswordform" method="post"  modelAttribute="userpassword"  >
-                                <form:input path="userpassword" name="userpassword" placeholder="Hasło" class="form-control" type="password" />
+                                <form:input path="userpassword" name="userpassword" placeholder="Hasło" class="form-control" pattern="\\w{5,100}" type="password" />
                                 <form:errors path="userpassword" />
                                 <button class="btn btn-primary" type="submit">Podaj hasło</button>
                             </form:form>

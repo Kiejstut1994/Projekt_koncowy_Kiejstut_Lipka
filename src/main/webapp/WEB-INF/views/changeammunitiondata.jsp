@@ -46,7 +46,7 @@
                                 <form:errors path="price" />
                                 </br>
                                 Liczba naboi w paczce:
-                                <form:input path="numberinpack" name="numberinpack" placeholder="Liczba naboi" class="form-control" type="number" min="1" step="1" />
+                                <form:input path="numberinpack" name="numberinpack" placeholder="Liczba naboi" class="form-control" type="number"  step="1" />
                                 <form:errors path="numberinpack" />
                                 </br>
                                 Nazwa zdjęcia(proszę wstawić plik jpg do pliku /assets/img)

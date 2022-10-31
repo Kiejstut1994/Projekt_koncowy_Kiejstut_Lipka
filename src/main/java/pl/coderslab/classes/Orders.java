@@ -21,6 +21,8 @@ public class Orders {
     @OneToMany
     private List<Guncovers> guncovers=new ArrayList<>();
     @OneToMany
+    private List<OpticAccesories> opticAccesories=new ArrayList<>();
+    @OneToMany
     private List<Weapons> weapons=new ArrayList<>();
     @Column(name = "price")
     private double price;
@@ -28,6 +30,19 @@ public class Orders {
     private boolean active;
     @Column(name = "paid")
     private boolean paid;
+
+    public Orders(int id, int puchaserid, List<Ammunition> ammunitions, List<EarandeyesrecoverAccesories> earandeyesrecoverAccesories, List<Guncovers> guncovers, List<OpticAccesories> opticAccesories, List<Weapons> weapons, double price, boolean active, boolean paid) {
+        this.id = id;
+        this.puchaserid = puchaserid;
+        this.ammunitions = ammunitions;
+        this.earandeyesrecoverAccesories = earandeyesrecoverAccesories;
+        this.guncovers = guncovers;
+        this.opticAccesories = opticAccesories;
+        this.weapons = weapons;
+        this.price = price;
+        this.active = active;
+        this.paid = paid;
+    }
 
     public double getPrice() {
         return price;
@@ -101,16 +116,12 @@ public class Orders {
         this.weapons = weapons;
     }
 
-    public Orders(int id, int puchaserid, List<Ammunition> ammunitions, List<EarandeyesrecoverAccesories> earandeyesrecoverAccesories, List<Guncovers> guncovers, List<Weapons> weapons, double price, boolean active, boolean paid) {
-        this.id = id;
-        this.puchaserid = puchaserid;
-        this.ammunitions = ammunitions;
-        this.earandeyesrecoverAccesories = earandeyesrecoverAccesories;
-        this.guncovers = guncovers;
-        this.weapons = weapons;
-        this.price = price;
-        this.active = active;
-        this.paid = paid;
+    public List<OpticAccesories> getOpticAccesories() {
+        return opticAccesories;
+    }
+
+    public void setOpticAccesories(List<OpticAccesories> opticAccesories) {
+        this.opticAccesories = opticAccesories;
     }
 
     public Orders() {

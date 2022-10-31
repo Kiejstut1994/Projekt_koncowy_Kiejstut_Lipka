@@ -31,7 +31,7 @@
                                 <form:errors path="street"  />
                                 </br>
                                 Numer bloku/domu
-                                <form:input path="flatnumber" min="1" name="flatnumber" type="number" step="1"  class="form-control"  placeholder="Flatnumber" />
+                                <form:input path="flatnumber"  name="flatnumber" type="number" step="1"  class="form-control"  placeholder="Flatnumber" />
                                 <form:errors path="flatnumber"  />
                                 </br>
                                 Numer mieszkania(opcjonalnie)

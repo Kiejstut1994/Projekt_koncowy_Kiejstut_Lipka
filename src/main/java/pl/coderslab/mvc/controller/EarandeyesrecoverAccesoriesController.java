@@ -97,6 +97,9 @@ public class EarandeyesrecoverAccesoriesController {
             ochronawzrokisluch.add(earandeyesrecoverAccesories);
             ses.setAttribute("earandeyesrecoverAccesorieslist",ochronawzrokisluch);
         }else {
+            int noord=(int) ses.getAttribute("noord");
+            noord++;
+            ses.setAttribute("noord",noord);
             earandeyesrecoverAccesorieslist.add(earandeyesrecoverAccesories);
             ses.setAttribute("earandeyesrecoverAccesorieslist",earandeyesrecoverAccesorieslist);
         }

@@ -24,7 +24,7 @@
                         <div  class="col-md-4">
                             <form:form class="row g-3" action="/opticaccesoriesform" method="post" modelAttribute="opticaccesories" >
                                 Nazwa:
-                                <form:input path="name" name="name" placeholder="Nazwa" class="form-control" />
+                                <form:input path="name" name="name" placeholder="Nazwa" class="form-control" type="text"/>
                                 <form:errors path="name" />
                                 </br>
                                 Opis:
@@ -36,7 +36,7 @@
                                 <form:errors path="price" />
                                 </br>
                                 Ocena:
-                                <form:input path="rating" name="rating" placeholder="Ocena" class="form-control" type="number" min="0" max="10" step="0.1" />
+                                <form:input path="rating" name="rating" placeholder="Ocena" class="form-control" type="number" max="10" step="0.1" />
                                 <form:errors path="rating" />
                                 </br>
                                 Wybierz typ optyki dodawanej

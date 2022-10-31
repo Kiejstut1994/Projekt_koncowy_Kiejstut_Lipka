@@ -1,8 +1,11 @@
 package pl.coderslab.classes;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "opticaccesories")
@@ -10,23 +13,23 @@ public class OpticAccesories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "name")
     @Size(min = 5,max = 30,message ="Musi mieć więcej niż 5 cyfr a mniej niż 30")
     private String name;
-    @Column(name = "description",nullable = false)
+    @Column(name = "description")
     @Size(min = 5,max = 100,message ="Musi mieć więcej niż 5 cyfr a mniej niż 100")
     private String description;
-    @Column(name = "price",precision = 2,nullable = false)
-    @NotNull(message = "Podaj cenę")
+    @Column(name = "price",precision = 2)
+    @Positive(message = "Podaj cenę,wartość dodatnia")
     private double price;
-    @Column(name = "rating",precision = 1,nullable = false)
-    @NotNull(message = "Podaj ocenę")
+    @Column(name = "rating",precision = 1)
+    @Positive(message = "Podaj ocenę,wartość dodatnia")
     private double rating;
-    @Column(name = "type",nullable = false)
+    @Column(name = "type")
     @NotNull(message = "Podaj typ optyki")
     private String type;
-    @Column(name = "photo",nullable = false)
-    @NotNull(message = "Podaj zdjęcie")
+    @Column(name = "photo")
+    @NotEmpty(message = "Podaj zdjęcie")
     private String photo;
 
 public OpticAccesories(){}
@@ -94,5 +97,18 @@ public OpticAccesories(){}
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpticAccesories that = (OpticAccesories) o;
+        return id == that.id && Double.compare(that.price, price) == 0 && Double.compare(that.rating, rating) == 0 && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(type, that.type) && Objects.equals(photo, that.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, rating, type, photo);
     }
 }

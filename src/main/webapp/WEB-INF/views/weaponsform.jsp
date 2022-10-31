@@ -28,7 +28,7 @@
                                 <form:errors path="name" />
                                 </br>
                                 Masa z wypełnionym magazynkiem:
-                                <form:input path="weight" name="weight" placeholder="Masa(kg)" class="form-control" type="number" min="0" step="0.01" />
+                                <form:input path="weight" name="weight" placeholder="Masa(kg)" class="form-control" type="number" step="0.01" />
                                 <form:errors path="weight" />
                                 </br>
                                 Producent:
@@ -36,7 +36,7 @@
                                 <form:errors path="producent" />
                                 </br>
                                 Cena broni:
-                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" min="1" step="0.01" />
+                                <form:input path="price" name="price" placeholder="Cena (zł)" class="form-control" type="number" step="0.01" />
                                 <form:errors path="price" />
                                 </br>
                                 Kaliber:

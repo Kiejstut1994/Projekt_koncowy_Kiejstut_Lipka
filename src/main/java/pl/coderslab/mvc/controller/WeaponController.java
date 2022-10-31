@@ -47,6 +47,7 @@ public class WeaponController {
         if (weapons==null) {
             return "redirect:findbyweaponname";
         }else {
+
             return "redirect:changeweapondata/" + id;
         }
 
@@ -63,6 +64,9 @@ public String addweapon(@PathVariable("id") int id, HttpSession ses){
             bron.add(weapons);
             ses.setAttribute("weaponslist",bron);
             }else {
+            int noord=(int) ses.getAttribute("noord");
+            noord++;
+            ses.setAttribute("noord",noord);
             weaponsList.add(weapons);
             ses.setAttribute("weaponslist",weaponsList);
         }
@@ -70,18 +74,24 @@ public String addweapon(@PathVariable("id") int id, HttpSession ses){
         return "redirect:/shoppingcart";
         }
     @RequestMapping(value = "/changeweapondata/{id}", method = RequestMethod.GET)
-    public String updateweaponget(@PathVariable("id") int id,Model model) {
+    public String updateweaponget(@PathVariable("id") int id,Model model,@ModelAttribute("typewepon") List<String> typewepon,HttpSession session) {
         Weapons weapons=weaponsDAO.findById(id);
+        model.addAttribute("wepid",id);
         model.addAttribute("weapontochange",weapons);
         model.addAttribute("perswepon",new Weapons());
-
+        model.addAttribute("typewepon",typewepon);
         return "changeweapondata";
     }
     @RequestMapping(value = "/changeweapondata/{id}", method = RequestMethod.POST)
-    public String updateweaponpost(@PathVariable("id") int id,@Valid Weapons weapons, BindingResult result) {
+    public String updateweaponpost(@PathVariable("id") int id,@Valid Weapons weapons, BindingResult result,Model model,@ModelAttribute("typewepon") List<String> typewepon,HttpSession session) {
+
         if(result.hasErrors())
         {
-            return "changeweapondata/"+id;
+            Weapons weapons1=weaponsDAO.findById(id);
+            session.setAttribute("wepid",id);
+            session.setAttribute("weapontochange",weapons1);
+            session.setAttribute("typewepon",typewepon);
+            return "changeweapondata";
         }
         Weapons weaponsold=weaponsDAO.findById(id);
         weaponsold.setName(weapons.getName());
@@ -92,7 +102,8 @@ public String addweapon(@PathVariable("id") int id, HttpSession ses){
         weaponsold.setRating(weapons.getRating());
         weaponsold.setType(weapons.getType());
         weaponsold.setPhoto(weapons.getPhoto());
-
+        session.setAttribute("wepid",0);
+        session.setAttribute("weapontochange",null);
         weaponsDAO.update(weaponsold);
         return "changedata";
     }
@@ -138,6 +149,6 @@ public String addweapon(@PathVariable("id") int id, HttpSession ses){
         List<Weapons> weaponsList=(List<Weapons>) ses.getAttribute("weaponslist");
         weaponsList.remove(weapons);
         ses.setAttribute("weaponslist",weaponsList);
-        return "redirect:/shoppingcart";
+            return "redirect:/shoppingcart";
     }
 }

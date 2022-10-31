@@ -3,10 +3,7 @@ package pl.coderslab.classes;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "address")
@@ -14,15 +11,15 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "street",nullable = false,length=20)
+    @Column(name = "street")
     @Size(min = 5,max = 20,message ="Musi mieć więcej niż 5 cyfr a mniej niż 20")
     private String street;
-    @Column(name = "flatnumber",nullable = false,length=20)
-    @NotNull(message = "Podaj numer domu/bloku")
+    @Column(name = "flatnumber")
+    @Positive(message = "Podaj dodatnią wartość numeru bloku/domu")
     private int flatnumber;
-    @Column(name = "housenumber",length=20)
+    @Column(name = "housenumber")
     private int housenumber;
-    @Column(name = "postcode",length=5,nullable = false)
+    @Column(name = "postcode",length=5)
     @Pattern(regexp = "[0-9]{5}",message = "Błędny kod pocztowy, UWAGA: bez kreski")
     private String postcode;
 
@@ -39,6 +36,7 @@ public class Address {
     }
 
     public void setFlatnumber(int flatnumber) {
+
         this.flatnumber = flatnumber;
     }
 

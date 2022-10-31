@@ -10,7 +10,7 @@ public class Password {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "password",nullable = false,unique = true)
+    @Column(name = "password")
     @Size(min=5,max = 10000,message = "Za krótkie hasło")
     private String password;
 

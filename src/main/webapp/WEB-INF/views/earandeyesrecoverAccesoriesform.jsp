@@ -42,8 +42,8 @@
                                 <form:errors path="type" />
                                 </br>
                                 Nazwa zdjęcia(proszę wstawić plik jpg do pliku /assets/img)
-                                <form:input path="photo" name="photo" class="form-control"/>
-                                <form:errors path="photo" />
+                                <form:input path="photo"  name="photo" type="text" class="form-control" />
+                                <form:errors path="photo"/>
                                 </br>
                                 <button class="btn btn-primary" type="submit">Dodaj ochronę słuchu/wzroku</button>
                             </form:form>

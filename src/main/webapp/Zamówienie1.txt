@@ -1,0 +1,36 @@
+Zamówienie numer 1
+Zamawiający: Kiejstut Lipka
+Pesel: 94081110273
+Ulica Korzona numer bloku/domu: 117
+Numer mieszkania: 92
+Kod pocztowy: 03571
+Zamawiane rzeczy: 
+Broń: 
+Nazwa: Karabinek samopowtarzalny Diamondback kal. 223Rem
+Masa: 3.2
+Producent: Diamondback kal. 223Rem
+Cena: 6000.0
+Kaliber: 223Rem
+Typ broni: długa
+Amunicja: 
+Nazwa: Amunicja Geco .308 Win Plus 11g
+Masa: 0.44
+Kaliber: .308
+Typ amunicji: do karabinu
+Cena: 400.0
+Liczba w paczce: 40
+Ochrona wzroku i słuchu: 
+Nazwa: Słuchawki MSA Sordin Supreme Pro
+Cena: 950.0
+Opis: MSA Sordin Supreme Pro to profesjonalne rozwiązanie ochrony słuchu zaprojektowane z myślą o strzelca
+Typ ochrony: słuch
+Optyka: 
+Nazwa: Celownik kolimatorowy MAKdot S
+Opis: MAKdotS to wysokiej klasy kolimator zamknięty niemieckiej produkcji.
+Cena: 2050.0
+Typ ochrony: celowniki
+Optyka: 
+Nazwa: Sejf gabinetowy na broń MINI 1
+Opis: Sejf do przechowywania gotówki, wartości, dokumentów, broni i amunicji w Klasie S1
+Cena: 1000.0
+Razem do zapłaty: 10400.0

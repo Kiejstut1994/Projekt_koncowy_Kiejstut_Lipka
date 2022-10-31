@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.DAOclasses.AddressDAO;
+import pl.coderslab.DAOclasses.OrdersDAO;
 import pl.coderslab.DAOclasses.PasswordDAO;
 import pl.coderslab.DAOclasses.PurchaseDAO;
 
@@ -23,10 +24,12 @@ public class PurchaseController {
     public final PurchaseDAO purchasedao;
     public final PasswordDAO passwordDAO;
     public final AddressDAO addressDAO;
-    public PurchaseController(PurchaseDAO purchasedao, PasswordDAO passwordDAO, AddressDAO addressDAO){
+    public final OrdersDAO ordersDAO;
+    public PurchaseController(PurchaseDAO purchasedao, PasswordDAO passwordDAO, AddressDAO addressDAO, OrdersDAO ordersDAO){
         this.purchasedao=purchasedao;
         this.passwordDAO = passwordDAO;
         this.addressDAO = addressDAO;
+        this.ordersDAO = ordersDAO;
     }
     @RequestMapping(value = "/purchaserform", method = RequestMethod.GET)
     public String getFrom(Model model) {
@@ -59,6 +62,8 @@ public class PurchaseController {
         }
         ses.setAttribute("repeatpesel",0);
         ses.setAttribute("repeatemail",0);
+        purchaser.setEmailveryfication(false);
+        purchaser.setFirearmslicensce(false);
         if (result.hasErrors()) {
             return "purchaserform";
         }
@@ -89,6 +94,10 @@ public class PurchaseController {
         ses.setAttribute("namesurname",null);
         ses.setAttribute("userzalogowany",1);
         ses.setAttribute("canbuy",0);
+        ses.setAttribute("existnotpaidacticver",null);
+        ses.setAttribute("ordersnotactvenotpaid",null);
+        ses.setAttribute("myorders",null);
+        ses.setAttribute("numbrermyorders",null);
         return "mainview";
     }
     @RequestMapping(value = "/loginform", method = RequestMethod.POST)
@@ -99,6 +108,8 @@ public class PurchaseController {
             ses.setAttribute("zalogowany",purchaser.getId());
             ses.setAttribute("noord",0);
             ses.setAttribute("namesurname",purchaser.getName()+" "+purchaser.getSurname());
+            ses.setAttribute("myorders",ordersDAO.myordersactiveorpaid(purchaser.getId()));
+            ses.setAttribute("numbrermyorders",ordersDAO.myexistsnotpaidnotactive(purchaser.getId()));
             if(purchaser.isEmailveryfication() && purchaser.isFirearmslicensce()){
                 ses.setAttribute("canbuy",1);
             }else {
@@ -108,9 +119,6 @@ public class PurchaseController {
         }else {
             return "redirect:loginform";
         }
-
-
-
     }
     @RequestMapping(value = "/purchaserloged", method = RequestMethod.GET)
     public String purchaserloged(HttpSession ses) {
@@ -119,6 +127,7 @@ public class PurchaseController {
         ses.setAttribute("ammunitionlist",null);
         ses.setAttribute("earandeyesrecoverAccesorieslist",null);
         ses.setAttribute("guncoverslist",null);
+
         return "purchaserloged";
     }
 

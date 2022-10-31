@@ -3,11 +3,14 @@ package pl.coderslab.classes;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ammunition")
@@ -15,26 +18,26 @@ public class Ammunition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "name")
     @Size(min = 5,message = "Za krótka nazwa")
     private String name;
-    @Column(name = "weight",precision = 2,nullable = false)
-    @NotNull(message = "Podaj wagę")
+    @Column(name = "weight",precision = 2)
+    @Positive(message = "Podaj wagę, wartość dodatnia")
     private double weight;
-    @Column(name = "caliber",nullable = false)
-    @NotNull(message = "Podaj kaliber broni")
+    @Column(name = "caliber")
+    @NotEmpty(message = "Podaj kaliber broni")
     private String caliber;
-    @Column(name = "type",nullable = false)
+    @Column(name = "type")
     @NotNull(message = "Podaj typ do jakiej broni jest ona przeznaczona")
     private String type;
     @Column(name = "price",nullable = false)
-    @NotNull(message = "Podaj cenę (liczbę)")
+    @Positive(message = "Podaj cenę (liczbę)")
     private double price;
     @Column(name = "numberinpack",nullable = false)
-    @NotNull(message = "Liczba naboi w paczce")
+    @Positive(message = "Liczba naboi w paczce")
     private int numberinpack;
     @Column(name = "photo",nullable = false)
-    @NotNull(message = "Podaj nazwę zdjęcia")
+    @NotEmpty(message = "Podaj nazwę zdjęcia")
     private String photo;
 
     public Ammunition(int id, String name, double weight, String caliber, String type, double price, int numberinpack, String photo) {
@@ -113,4 +116,16 @@ public class Ammunition {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ammunition that = (Ammunition) o;
+        return id == that.id && Double.compare(that.weight, weight) == 0 && Double.compare(that.price, price) == 0 && numberinpack == that.numberinpack && Objects.equals(name, that.name) && Objects.equals(caliber, that.caliber) && Objects.equals(type, that.type) && Objects.equals(photo, that.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, weight, caliber, type, price, numberinpack, photo);
+    }
 }

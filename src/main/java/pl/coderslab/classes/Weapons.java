@@ -3,9 +3,8 @@ package pl.coderslab.classes;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "weapons")
@@ -13,29 +12,29 @@ public class Weapons {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name",length = 200, nullable = false)
+    @Column(name = "name",length = 200)
     @Size(min = 5,message ="Za krótka nazwa" )
     private String name;
-    @Column(name = "weight", precision = 2,nullable = false)
-    @NotNull(message = "Podaj wagę")
+    @Column(name = "weight", precision = 2)
+    @Positive(message = "Podaj dodatnią wartość masy")
     private double weight;
-    @Column(name = "producent",length=100,nullable = false)
+    @Column(name = "producent",length=100)
     @Size(min = 5,max = 30,message ="Nazwa producenta między 5 a 30 znaków" )
     private String producent;
-    @Column(name = "price", precision = 2,nullable = false)
-    @NotNull(message = "Podaj cenę")
+    @Column(name = "price", precision = 2)
+    @Positive(message = "Podaj dodatnią wartość ceny")
     private double price;
-    @Column(name = "caliber",length=20,nullable = false)
+    @Column(name = "caliber",length=20)
     @Size(min = 2,message ="Za krótka nazwa kalibru" )
     private String caliber;
-    @Column(name = "rating", precision = 1,nullable = false)
-    @NotNull(message = "Podaj ocenę")
+    @Column(name = "rating", precision = 1)
+    @Positive(message = "Podaj ocenę (wartość dodatnia)")
     private double rating;
-    @Column(name = "type",length=20,nullable = false)
+    @Column(name = "type",length=20)
     @NotNull(message = "Proszę wybrać jedną opcję")
     private String type;
-    @Column(name = "photo",length = 200,nullable = false)
-    @NotNull(message = "To nie może być puste")
+    @Column(name = "photo",length = 200)
+    @NotEmpty(message = "To pole nie może być puste")
     private String photo;
 
     public Weapons(){}
@@ -120,6 +119,19 @@ public class Weapons {
     }
 
     public void setPhoto(String photo) {
-        this.photo = photo;
+            this.photo = photo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Weapons weapons = (Weapons) o;
+        return id == weapons.id && Double.compare(weapons.weight, weight) == 0 && Double.compare(weapons.price, price) == 0 && Double.compare(weapons.rating, rating) == 0 && Objects.equals(name, weapons.name) && Objects.equals(producent, weapons.producent) && Objects.equals(caliber, weapons.caliber) && Objects.equals(type, weapons.type) && Objects.equals(photo, weapons.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, weight, producent, price, caliber, rating, type, photo);
     }
 }
